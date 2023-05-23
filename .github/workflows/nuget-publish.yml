@@ -1,7 +1,9 @@
 name: Publish to NuGet
 
 on:
-  push:
+  create:
+    tags:
+      - 'v*' # Match any tag starting with 'v'
     branches:
       - main
 
