@@ -18,9 +18,15 @@ jobs:
         with:
           dotnet-version: '6.0.x'
 
+      - name: Restore NuGet packages
+        run: dotnet restore
+
       - name: Build and test
         run: dotnet build --configuration Release --no-restore
+
+      - name: Build and Publish NuGet package
+        run: dotnet pack --configuration Release --output ./artifacts
         
       - name: Publish to NuGet
-        run: dotnet nuget push ./packages/OchoaLopes.ExprEngine.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push ./artifacts/OchoaLopes.ExprEngine.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
       
