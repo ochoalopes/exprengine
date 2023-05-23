@@ -21,8 +21,9 @@ jobs:
       - name: Get the version from tag
         id: get_version
         run: |
-          VERSION=${GITHUB_REF#refs/tags/}
-          echo "::set-output name=VERSION::${VERSION//v}"
+          VERSION=${GITHUB_REF#refs/tags/v}
+          VERSION=${VERSION#.}
+          echo "::set-output name=VERSION::$VERSION"
           
       - name: Restore NuGet packages
         run: dotnet restore
