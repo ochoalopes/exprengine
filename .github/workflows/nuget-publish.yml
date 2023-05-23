@@ -18,9 +18,11 @@ jobs:
         with:
           dotnet-version: '6.0.x'
         
-      - name: Get the version
+      - name: Get the version from tag
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "::set-output name=VERSION::${VERSION//v}"
           
       - name: Restore NuGet packages
         run: dotnet restore
