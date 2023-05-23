@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Interfaces\" />
+    <None Remove="Expressions\" />
+    <None Remove="Operations\" />
+    <None Remove="ValueObjects\" />
+    <None Remove="Services\" />
+    <None Remove="Validators\" />
+    <None Remove="Helpers\" />
+    <None Remove="Enums\" />
+    <None Remove="Exceptions\" />
+    <None Remove="Delegates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Expressions\" />
+    <Folder Include="Operations\" />
+    <Folder Include="ValueObjects\" />
+    <Folder Include="Services\" />
+    <Folder Include="Validators\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Enums\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Delegates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\.editorconfig" />
+  </ItemGroup>
+</Project>
