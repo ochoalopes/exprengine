@@ -10,6 +10,7 @@ The ExprEngine library can be installed via NuGet. Use the package manager conso
 
 ```csharp
 Install-Package ExprEngine
+```
 
 ### Usage
 
@@ -17,11 +18,13 @@ Install-Package ExprEngine
 
 ```csharp
 using OchoaLopes.ExprEngine;
+```
 
 2. Create an instance of `ExprEngine`:
 
 ```csharp
 var exprEngine = new ExprEngine();
+```
 
 3. Validate an expression:
 
@@ -33,11 +36,11 @@ var variables = new Dictionary<string, object>
 };
 
 bool isValid = exprEngine.ValidateExpression(expression, variables);
+```
 
 4. Evaluate an expression:
 
 ```csharp
-
 string expression = "(:x + 5i) > 10i";
 var variables = new Dictionary<string, object>
 {
@@ -45,6 +48,7 @@ var variables = new Dictionary<string, object>
 };
 
 bool result = exprEngine.EvaluateExpression(expression, variables);
+```
 
 5. Compute an expression:
 
@@ -57,6 +61,7 @@ var variables = new Dictionary<string, object>
 };
 
 object result = exprEngine.ComputeExpression(expression, variables);
+```
 
 ### Additional Methods
 
