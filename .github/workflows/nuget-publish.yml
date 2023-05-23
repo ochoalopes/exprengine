@@ -1,10 +1,9 @@
 name: Publish to NuGet
 
-env:
-  PACKAGE_VERSION: ${{ github.ref }}
-
 on:
-  push:
+  create:
+    tags:
+      - 'v*' # Match any tag starting with 'v'
     branches:
       - main
 
@@ -24,12 +23,18 @@ jobs:
       - name: Restore NuGet packages
         run: dotnet restore
 
-      - name: Build and test
+      - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      - name: Build and Publish NuGet package
-        run: dotnet pack --configuration Release --output ./artifacts --version-suffix ${{ env.PACKAGE_VERSION }}
-        
+      - name: Test
+        run: dotnet test --configuration Release --no-restore
+
+      - name: Publish NuGet package
+        run: dotnet pack --configuration Release --output ./artifacts --version-suffix ${{ github.ref_name }}
+
       - name: Publish to NuGet
-        run: dotnet nuget push ./artifacts/OchoaLopes.ExprEngine.${{ env.PACKAGE_VERSION }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-      
+        uses: nuget/nuget-publish@v1
+        with:
+          nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+          nuget-version: ${{ github.ref_name }}
+          nuget-packages-folder: ./artifacts
