@@ -30,8 +30,8 @@ jobs:
         run: dotnet test --configuration Release --no-restore
 
       - name: Publish NuGet package
-        run: dotnet pack --configuration Release --output ./artifacts --version-suffix ${{ github.ref_name }}
+        run: dotnet pack --configuration Release --output ./artifacts --version-suffix ${{ github.ref }}
         
       - name: Publish to NuGet
-        run: dotnet nuget push ./artifacts/OchoaLopes.ExprEngine.${{ github.ref_name }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+        run: dotnet nuget push ./artifacts/OchoaLopes.ExprEngine.${{ github.ref }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
       
