@@ -1,7 +1,7 @@
 name: Publish to NuGet
 
 on:
-  create:
+  push:
     tags:
       - 'v*' # Match any tag starting with 'v'
     branches:
@@ -19,7 +19,11 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
-
+        
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/v}
+          
       - name: Restore NuGet packages
         run: dotnet restore
 
@@ -30,8 +34,7 @@ jobs:
         run: dotnet test --configuration Release --no-restore
 
       - name: Publish NuGet package
-        run: dotnet pack --configuration Release --output ./artifacts --version-suffix ${{ env.TAG_NAME:removePrefix:v }}
+        run: dotnet pack --configuration Release --output ./artifacts --version-suffix ${{ steps.get_version.outputs.VERSION }}
         
       - name: Publish to NuGet
-        run: dotnet nuget push ./artifacts/OchoaLopes.ExprEngine.${{ env.TAG_NAME:removePrefix:v }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-      
+        run: dotnet nuget push ./artifacts/OchoaLopes.ExprEngine.${{ steps.get_version.outputs.VERSION }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
