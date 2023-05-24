@@ -17,17 +17,27 @@ namespace OchoaLopes.ExprEngine
             _evaluatorService = new EvaluatorService();
         }
 
-        public bool ValidateExpression(string expression, IDictionary<string, object>? variables = null)
+        public bool ValidateExpression(string expression)
         {
             try
             {
                 var tokens = _lexerService.Tokenize(expression);
                 var parsedExpression = _parserService.Parse(tokens);
 
-                if (variables == null)
-                {
-                    return true;
-                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool ValidateExpression(string expression, IDictionary<string, object> variables)
+        {
+            try
+            {
+                var tokens = _lexerService.Tokenize(expression);
+                var parsedExpression = _parserService.Parse(tokens);
 
                 foreach (var token in tokens)
                 {
@@ -50,17 +60,12 @@ namespace OchoaLopes.ExprEngine
             }
         }
 
-        public bool ValidateExpression(string expression, IList<object>? values = null)
+        public bool ValidateExpression(string expression, IList<object> values)
         {
             try
             {
                 var tokens = _lexerService.Tokenize(expression);
                 var parsedExpression = _parserService.Parse(tokens);
-
-                if (values == null)
-                {
-                    return true;
-                }
 
                 var variablesCount = tokens.Count(v => v.Type == TokenTypeEnum.Variable);
 
@@ -77,7 +82,19 @@ namespace OchoaLopes.ExprEngine
             }
         }
 
-        public bool EvaluateExpression(string expression, IDictionary<string, object>? variables = null)
+        public bool EvaluateExpression(string expression)
+        {
+            try
+            {
+                return Convert.ToBoolean(ComputeExpression(expression, new Dictionary<string, object>()));
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EvaluateExpression(string expression, IDictionary<string, object> variables)
         {
             try
             {
@@ -89,7 +106,7 @@ namespace OchoaLopes.ExprEngine
             }
         }
 
-        public bool EvaluateExpression(string expression, IList<object>? values = null)
+        public bool EvaluateExpression(string expression, IList<object> values)
         {
             try
             {
@@ -101,7 +118,20 @@ namespace OchoaLopes.ExprEngine
             }
         }
 
-        public object ComputeExpression(string expression, IDictionary<string, object>? variables = null)
+        public object ComputeExpression(string expression)
+        {
+            if (!ValidateExpression(expression))
+            {
+                throw new InvalidOperationException("Expression is not valid");
+            }
+
+            var tokens = _lexerService.Tokenize(expression);
+            var parsedExpression = _parserService.Parse(tokens);
+
+            return _evaluatorService.EvaluateExpression(parsedExpression, new Dictionary<string, object>());
+        }
+
+        public object ComputeExpression(string expression, IDictionary<string, object> variables)
         {
             if (!ValidateExpression(expression, variables))
             {
@@ -114,7 +144,7 @@ namespace OchoaLopes.ExprEngine
             return _evaluatorService.EvaluateExpression(parsedExpression, variables ?? new Dictionary<string, object>());
         }
 
-        public object ComputeExpression(string expression, IList<object>? values = null)
+        public object ComputeExpression(string expression, IList<object> values)
         {
             if (!ValidateExpression(expression, values))
             {

@@ -1,4 +1,4 @@
-# expressionService
+# ExprEngine
 
 expressionService is a lightweight expression evaluation library that allows you to validate, evaluate, and compute mathematical expressions with support for variables.
 
@@ -6,14 +6,14 @@ expressionService is a lightweight expression evaluation library that allows you
 
 ### Installation
 
-The expressionService library can be installed via NuGet. Use the package manager console or the NuGet package manager UI in Visual Studio to search for and install the package.
+The ExprEngine library can be installed via NuGet. Use the package manager console or the NuGet package manager UI in Visual Studio to search for and install the package.
 
 ```csharp
-Install-Package OchoaLopes.expressionService
+Install-Package OchoaLopes.ExprEngine
 ```
 
 ### Number Formats
-expressionService supports a few number formats as input parameters in expressions:
+ExprEngine supports a few number formats as input parameters in expressions:
 
 - Integer: Represented by appending an 'i' to the number. Example: "10i"
 - Float: Represented by appending an 'f' to the number. Example: "3.14f"
@@ -22,7 +22,7 @@ expressionService supports a few number formats as input parameters in expressio
 
 ### Usage
 
-1. Add a reference to the expressionService namespace:
+1. Add a reference to the OchoaLopes.ExprEngine namespace:
 
 ```csharp
 using OchoaLopes.ExprEngine;
@@ -75,17 +75,23 @@ object result = expressionService.ComputeExpression(expression, variables);
 
 In addition to the basic expression evaluation functionality, the expressionService library provides the following methods:
 
-- `bool ValidateExpression(string expression, IDictionary<string, object>? variables = null)`: Validates the syntax and structure of an expression. Optionally, you can provide a dictionary of variables and their values to validate expressions with variables.
+- `bool ValidateExpression(string expression)`: Validates the syntax and structure of an expression.
 
-- `bool ValidateExpression(string expression, IList<object>? values = null)`: Validates the syntax and structure of an expression. Optionally, you can provide a list of values to validate expressions with indexed placeholders.
+- `bool ValidateExpression(string expression, IDictionary<string, object> variables)`: Validates the syntax and structure of an expression. You have to provide a dictionary of variables and their values to validate expressions with variables.
 
-- `bool EvaluateExpression(string expression, IDictionary<string, object>? variables = null)`: Evaluates the expression and returns a boolean result. Optionally, you can provide a dictionary of variables and their values to evaluate expressions with variables.
+- `bool ValidateExpression(string expression, IList<object> values)`: Validates the syntax and structure of an expression. You have to provide a list of values to validate expressions with indexed placeholders.
 
-- `bool EvaluateExpression(string expression, IList<object>? values = null)`: Evaluates the expression and returns a boolean result. Optionally, you can provide a list of values to evaluate expressions with indexed placeholders.
+- `bool EvaluateExpression(string expression)`: Evaluates the expression and returns a boolean result.
 
-- `object ComputeExpression(string expression, IDictionary<string, object>? variables = null)`: Evaluates and computes the expression, returning the result. Optionally, you can provide a dictionary of variables and their values to compute expressions with variables.
+- `bool EvaluateExpression(string expression, IDictionary<string, object> variables)`: Evaluates the expression and returns a boolean result. You have to provide a dictionary of variables and their values to evaluate expressions with variables.
 
-- `object ComputeExpression(string expression, IList<object>? values = null)`: Evaluates and computes the expression, returning the result. Optionally, you can provide a list of values to compute expressions with indexed placeholders.
+- `bool EvaluateExpression(string expression, IList<object> values)`: Evaluates the expression and returns a boolean result. YOu have to provide a list of values to evaluate expressions with indexed placeholders.
+
+- `object ComputeExpression(string expression)`: Evaluates and computes the expression, returning the result.
+
+- `object ComputeExpression(string expression, IDictionary<string, object> variables)`: Evaluates and computes the expression, returning the result. You have to provide a dictionary of variables and their values to compute expressions with variables.
+
+- `object ComputeExpression(string expression, IList<object> values)`: Evaluates and computes the expression, returning the result. You have to provide a list of values to compute expressions with indexed placeholders.
 
 ## 6. Limitations
 
