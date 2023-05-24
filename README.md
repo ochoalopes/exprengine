@@ -9,7 +9,7 @@ ExprEngine is a lightweight expression evaluation library that allows you to val
 The ExprEngine library can be installed via NuGet. Use the package manager console or the NuGet package manager UI in Visual Studio to search for and install the package.
 
 ```csharp
-Install-Package ExprEngine
+Install-Package OchoaLopes.ExprEngine
 ```
 
 ### Number Formats
