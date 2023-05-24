@@ -12,6 +12,14 @@ The ExprEngine library can be installed via NuGet. Use the package manager conso
 Install-Package ExprEngine
 ```
 
+### Number Formats
+ExprEngine supports a few number formats as input parameters in expressions:
+
+- Integer: Represented by appending an 'i' to the number. Example: "10i"
+- Float: Represented by appending an 'f' to the number. Example: "3.14f"
+- Double: Represented by appending an 'D' to the number. Example: "6.02D"
+- Decimal: Represented by appending a 'd' to the number. Example: "100.0d"
+
 ### Usage
 
 1. Add a reference to the ExprEngine namespace:
@@ -97,5 +105,4 @@ We welcome your feedback and contributions to the ExprEngine library. If you hav
 
 ## 8. License
 
-The ExprEngine library is licensed under the [MIT License](https://opensource.org/licenses/MIT). You are free to use, modify, and distribute this library in accordance with the terms of the license. Please see the [LICENSE](https://github.com/your/repo/blob/main/LICENSE) file for more details.
-
+The ExprEngine library is licensed under the [Apache License 2.0](https://opensource.org/licenses/Apache-2.0). You are free to use, modify, and distribute this library in accordance with the terms of the license. Please see the [LICENSE](https://github.com/your/repo/blob/main/LICENSE) file for more details.
