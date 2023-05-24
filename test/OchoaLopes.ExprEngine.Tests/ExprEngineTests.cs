@@ -459,5 +459,44 @@ namespace OchoaLopes.ExprEngine.Tests
             // Assert
             Assert.IsTrue(result);
         }
+
+        [Test]
+        public void ValidateExpression_SimpleComparison_ReturnsTrue()
+        {
+            // Arrange
+            var expression = "(10i * 5i) > (1i * 6i)";
+
+            // Act
+            var result = _expressionService.ValidateExpression(expression);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpression_SimpleComparison_ReturnsTrue()
+        {
+            // Arrange
+            var expression = "(10i * 5i) > (1i * 6i)";
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void ComputeExpression_SimpleMath_ReturnsTrue()
+        {
+            // Arrange
+            var expression = "10i * 10d";
+
+            // Act
+            var result = (double)_expressionService.ComputeExpression(expression);
+
+            // Assert
+            Assert.That(result, Is.EqualTo(100));
+        }
     }
 }

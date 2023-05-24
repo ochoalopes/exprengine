@@ -4,6 +4,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IsPackable>true</IsPackable>
+    <PackageId>OchoaLopes.ExprEngine</PackageId>
+    <Version>1.2.0</Version>
+    <Authors>leovene</Authors>
+    <Company>OchoaLopes</Company>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,6 +38,10 @@
     <Folder Include="Delegates\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\.editorconfig" />
+    <None Include="../../.editorconfig" />
+    <None Include="../../README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="../../assets/icon.png" Pack="true" PackagePath="" Visible="false" />
   </ItemGroup>
 </Project>
