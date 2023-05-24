@@ -1,13 +1,15 @@
-﻿namespace OchoaLopes.ExprEngine.Tests
+﻿using OchoaLopes.ExprEngine;
+
+namespace OchoaLopes.ExprEngine.Tests
 {
     internal class ExprEngineTests
     {
-        private ExprEngine _exprEngine;
+        private ExpressionService _expressionService;
 
         [SetUp]
         public void Setup()
         {
-            _exprEngine = new ExprEngine();
+            _expressionService = new ExpressionService();
         }
 
         [Test]
@@ -18,7 +20,7 @@
             var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 } };
 
             // Act
-            var result = _exprEngine.ValidateExpression(expression, variables);
+            var result = _expressionService.ValidateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -32,7 +34,7 @@
             var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 } };
 
             // Act
-            var result = _exprEngine.ValidateExpression(expression, variables);
+            var result = _expressionService.ValidateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -46,7 +48,7 @@
             var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 } };
 
             // Act
-            var result = _exprEngine.ValidateExpression(expression, variables);
+            var result = _expressionService.ValidateExpression(expression, variables);
 
             // Assert
             Assert.IsFalse(result);
@@ -60,7 +62,7 @@
             var variables = new Dictionary<string, object> { { ":x", 1 } };
 
             // Act
-            var result = _exprEngine.ValidateExpression(expression, variables);
+            var result = _expressionService.ValidateExpression(expression, variables);
 
             // Assert
             Assert.IsFalse(result);
@@ -74,7 +76,7 @@
             var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 } };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -88,7 +90,7 @@
             var variables = new Dictionary<string, object> { { ":x", 1 } };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsFalse(result);
@@ -102,7 +104,7 @@
             var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 }, { ":z", 3 }, { ":result", 9 } };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -116,7 +118,7 @@
             var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 }, { ":z", 3 }, { ":result", 10 } };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsFalse(result);
@@ -130,7 +132,7 @@
             var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 }, { ":z", 3 }, { ":w", 4 }, { ":result", 3 } };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -154,7 +156,7 @@
             };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -178,7 +180,7 @@
             };
 
             // Act
-            var result = _exprEngine.ValidateExpression(expression, variables);
+            var result = _expressionService.ValidateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -202,7 +204,7 @@
             };
 
             // Act
-            var result = _exprEngine.ValidateExpression(expression, variables);
+            var result = _expressionService.ValidateExpression(expression, variables);
 
             // Assert
             Assert.IsFalse(result);
@@ -216,7 +218,7 @@
             var values = new List<object> { 4, 2, 5, 10 }; // x=4, y=2, z=5, w=10
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, values);
+            var result = _expressionService.EvaluateExpression(expression, values);
 
             // Assert
             Assert.IsTrue(result);
@@ -230,7 +232,7 @@
             var values = new List<object> { 2, 4, 10, 5 }; // x=2, y=4, z=10, w=5
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, values);
+            var result = _expressionService.EvaluateExpression(expression, values);
 
             // Assert
             Assert.IsFalse(result);
@@ -244,7 +246,7 @@
             var values = new List<object> { 4, 2 }; // Missing values for z and w
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, values);
+            var result = _expressionService.EvaluateExpression(expression, values);
 
             // Assert
             Assert.IsFalse(result);
@@ -258,7 +260,7 @@
             var values = new List<object> { 4, 2, 5, 10, 1, 1, 2, 2 };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, values);
+            var result = _expressionService.EvaluateExpression(expression, values);
 
             // Assert
             Assert.IsFalse(result);
@@ -276,7 +278,7 @@
             };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -294,7 +296,7 @@
             };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsFalse(result);
@@ -312,7 +314,7 @@
             };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -330,7 +332,7 @@
             };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -347,7 +349,7 @@
             };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -365,7 +367,7 @@
             };
 
             // Act
-            var result = (double)_exprEngine.ComputeExpression(expression, variables);
+            var result = (double)_expressionService.ComputeExpression(expression, variables);
 
             // Assert
             Assert.That(result, Is.EqualTo(10));
@@ -382,7 +384,7 @@
             };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -399,7 +401,7 @@
             };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);
@@ -416,7 +418,7 @@
             };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsFalse(result);
@@ -433,7 +435,7 @@
             };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsFalse(result);
@@ -452,7 +454,7 @@
             };
 
             // Act
-            var result = _exprEngine.EvaluateExpression(expression, variables);
+            var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
             Assert.IsTrue(result);

@@ -1,6 +1,6 @@
 ﻿namespace OchoaLopes.ExprEngine.Interfaces
 {
-    public interface IExprEngine
+    public interface IExpressionService
 	{
         bool ValidateExpression(string expression, IDictionary<string, object>? variables = null);
 
