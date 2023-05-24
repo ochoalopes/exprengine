@@ -4,13 +4,13 @@ using OchoaLopes.ExprEngine.Services;
 
 namespace OchoaLopes.ExprEngine
 {
-    public class ExprEngine : IExprEngine
+    public class ExpressionService : IExpressionService
 	{
         private readonly ILexerService _lexerService;
         private readonly IParserService _parserService;
         private readonly IEvaluatorService _evaluatorService;
 
-        public ExprEngine()
+        public ExpressionService()
         {
             _lexerService = new LexerService();
             _parserService = new ParserService();
