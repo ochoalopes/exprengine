@@ -11,6 +11,7 @@
     <Authors>leovene</Authors>
     <Company>OchoaLopes</Company>
     <PackageIcon>icon.png</PackageIcon>
+    <Description>This is a lightweight expression evaluation library that allows you to validate, evaluate, and compute mathematical expressions with support for variables.</Description>
   </PropertyGroup>
 
   <ItemGroup>

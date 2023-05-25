@@ -26,7 +26,10 @@ namespace OchoaLopes.ExprEngine.Services
                     type = TokenizerValidator.IsUnaryMinus(tokens, tokens.Count) ? TokenTypeEnum.UnaryMinus : TokenTypeEnum.BinaryMinus;
                 }
 
-                tokens.Add(new Token(type, TokenizerHelper.RemoveSuffix(type, value)));
+                value = TokenizerHelper.RemovePrefix(type, value);
+                value = TokenizerHelper.RemoveSuffix(type, value);
+
+                tokens.Add(new Token(type, value));
             }
 
             return tokens;

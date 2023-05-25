@@ -80,5 +80,15 @@ namespace OchoaLopes.ExprEngine.Helpers
 
             return token;
         }
+
+        public static string RemovePrefix(TokenTypeEnum type, string token)
+        {
+            if (type == TokenTypeEnum.Variable)
+            {
+                return token.Substring(1);
+            }
+
+            return token;
+        }
     }
 }
