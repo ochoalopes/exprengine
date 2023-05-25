@@ -7,10 +7,11 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IsPackable>true</IsPackable>
     <PackageId>OchoaLopes.ExprEngine</PackageId>
-    <Version>1.2.0</Version>
+    <Version>1.2.2</Version>
     <Authors>leovene</Authors>
     <Company>OchoaLopes</Company>
     <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/ochoalopes/exprengine</RepositoryUrl>
     <Description>This is a lightweight expression evaluation library that allows you to validate, evaluate, and compute mathematical expressions with support for variables.</Description>
   </PropertyGroup>
 

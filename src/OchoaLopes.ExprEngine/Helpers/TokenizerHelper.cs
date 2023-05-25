@@ -1,4 +1,5 @@
-﻿using OchoaLopes.ExprEngine.Enums;
+﻿using System;
+using OchoaLopes.ExprEngine.Enums;
 using OchoaLopes.ExprEngine.Validators;
 
 namespace OchoaLopes.ExprEngine.Helpers
@@ -64,7 +65,19 @@ namespace OchoaLopes.ExprEngine.Helpers
             }
         }
 
-        public static string RemoveSuffix(TokenTypeEnum type,string token)
+        
+
+        public static string CleanUpTokenValue(TokenTypeEnum type, string token)
+        {
+            token = RemoveStringLiteralSingleQuotes(type, token);
+            token = RemovePrefix(type, token);
+            token = RemoveSuffix(type, token);
+
+            return token;
+        }
+
+        #region Private Methods
+        private static string RemoveSuffix(TokenTypeEnum type, string token)
         {
             var types = new TokenTypeEnum[] {
                 TokenTypeEnum.LiteralInteger,
@@ -75,20 +88,31 @@ namespace OchoaLopes.ExprEngine.Helpers
 
             if (types.Contains(type))
             {
-                return token.Substring(0, token.Length - 1);
+                return token.Substring(0, token.Length - 1).Trim();
             }
 
-            return token;
+            return token.Trim();
         }
 
-        public static string RemovePrefix(TokenTypeEnum type, string token)
+        private static string RemovePrefix(TokenTypeEnum type, string token)
         {
             if (type == TokenTypeEnum.Variable)
             {
-                return token.Substring(1);
+                return token.Substring(1).Trim();
             }
 
-            return token;
+            return token.Trim();
         }
+
+        private static string RemoveStringLiteralSingleQuotes(TokenTypeEnum type, string token)
+        {
+            if (type == TokenTypeEnum.LiteralString)
+            {
+                return token.Replace("'", "").Trim();
+            }
+
+            return token.Trim();
+        }
+        #endregion
     }
 }

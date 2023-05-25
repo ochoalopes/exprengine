@@ -23,7 +23,9 @@ ExprEngine supports a few number formats as input parameters in expressions:
 ### Variable
 To use variable you have to add a placeholder in your expression, then you can use a dictionary or an ordered list of values, this is available for ValidateExpression, EvaluateExpression and ComputeExpression.
 
-- String: ":firstVariable * 10i <= :secondVariable"
+```csharp
+string expression = ":firstVariable * 10i <= :secondVariable";
+```
 
 ### Usage
 
@@ -87,7 +89,7 @@ In addition to the basic expression evaluation functionality, the ExprEngine lib
 
 - `bool EvaluateExpression(string expression, IDictionary<string, object> variables)`: Evaluates the expression and returns a boolean result. You have to provide a dictionary of variables and their values to evaluate expressions with variables.
 
-- `bool EvaluateExpression(string expression, IList<object> values)`: Evaluates the expression and returns a boolean result. YOu have to provide a list of values to evaluate expressions with indexed placeholders.
+- `bool EvaluateExpression(string expression, IList<object> values)`: Evaluates the expression and returns a boolean result. You have to provide a list of values to evaluate expressions with indexed placeholders.
 
 - `object ComputeExpression(string expression)`: Evaluates and computes the expression, returning the result.
 

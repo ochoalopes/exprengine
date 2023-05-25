@@ -498,5 +498,22 @@ namespace OchoaLopes.ExprEngine.Tests
             // Assert
             Assert.That(result, Is.EqualTo(100));
         }
+
+        [Test]
+        public void EvaluateExpression_StringComparison_ReturnsTrue()
+        {
+            // Arrange
+            var expression = ":input == 'test'";
+            var variables = new Dictionary<string, object>
+            {
+                { "input", "test"}
+            };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
     }
 }
