@@ -23,7 +23,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             {
                 new Token(TokenTypeEnum.Variable, "userName"),
                 new Token(TokenTypeEnum.Equal, "=="),
-                new Token(TokenTypeEnum.LiteralString, "'Test'"),
+                new Token(TokenTypeEnum.LiteralString, "Test"),
                 new Token(TokenTypeEnum.And, "&&"),
                 new Token(TokenTypeEnum.Variable, "userAge"),
                 new Token(TokenTypeEnum.GreaterThanOrEqual, ">="),
@@ -50,7 +50,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             {
                 new Token(TokenTypeEnum.Variable, "userName"),
                 new Token(TokenTypeEnum.Equal, "=="),
-                new Token(TokenTypeEnum.LiteralString, "'Test'"),
+                new Token(TokenTypeEnum.LiteralString, "Test"),
                 new Token(TokenTypeEnum.And, "&&"),
                 new Token(TokenTypeEnum.Variable, "userAge"),
                 new Token(TokenTypeEnum.GreaterThanOrEqual, ">="),
@@ -58,7 +58,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
                 new Token(TokenTypeEnum.Or, "||"),
                 new Token(TokenTypeEnum.Variable, "userType"),
                 new Token(TokenTypeEnum.NotEqual, "!="),
-                new Token(TokenTypeEnum.LiteralString, "'Admin'"),
+                new Token(TokenTypeEnum.LiteralString, "Admin"),
                 new Token(TokenTypeEnum.And, "&&"),
                 new Token(TokenTypeEnum.LeftParenthesis, "("),
                 new Token(TokenTypeEnum.Variable, "isActive"),
@@ -165,11 +165,11 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             {
                 new Token(TokenTypeEnum.Variable, "userName"),
                 new Token(TokenTypeEnum.Equal, "=="),
-                new Token(TokenTypeEnum.LiteralString, "'John Doe'"),
+                new Token(TokenTypeEnum.LiteralString, "John Doe"),
                 new Token(TokenTypeEnum.Or, "||"),
                 new Token(TokenTypeEnum.Variable, "country"),
                 new Token(TokenTypeEnum.Equal, "=="),
-                new Token(TokenTypeEnum.LiteralString, "'United States'")
+                new Token(TokenTypeEnum.LiteralString, "United States")
             };
 
             var actualTokens = lexer.Tokenize(expression);
