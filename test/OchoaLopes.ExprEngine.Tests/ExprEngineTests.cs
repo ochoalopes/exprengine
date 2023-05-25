@@ -17,7 +17,7 @@ namespace OchoaLopes.ExprEngine.Tests
         {
             // Arrange
             var expression = ":x + :y";
-            var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 } };
+            var variables = new Dictionary<string, object> { { "x", 1 }, { "y", 2 } };
 
             // Act
             var result = _expressionService.ValidateExpression(expression, variables);
@@ -31,7 +31,7 @@ namespace OchoaLopes.ExprEngine.Tests
         {
             // Arrange
             var expression = ":x - :y";
-            var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 } };
+            var variables = new Dictionary<string, object> { { "x", 1 }, { "y", 2 } };
 
             // Act
             var result = _expressionService.ValidateExpression(expression, variables);
@@ -45,7 +45,7 @@ namespace OchoaLopes.ExprEngine.Tests
         {
             // Arrange
             var expression = ":x + ";
-            var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 } };
+            var variables = new Dictionary<string, object> { { "x", 1 }, { "y", 2 } };
 
             // Act
             var result = _expressionService.ValidateExpression(expression, variables);
@@ -59,7 +59,7 @@ namespace OchoaLopes.ExprEngine.Tests
         {
             // Arrange
             var expression = ":x + :y";
-            var variables = new Dictionary<string, object> { { ":x", 1 } };
+            var variables = new Dictionary<string, object> { { "x", 1 } };
 
             // Act
             var result = _expressionService.ValidateExpression(expression, variables);
@@ -73,7 +73,7 @@ namespace OchoaLopes.ExprEngine.Tests
         {
             // Arrange
             var expression = ":x == 1i && :y == 2i";
-            var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 } };
+            var variables = new Dictionary<string, object> { { "x", 1 }, { "y", 2 } };
 
             // Act
             var result = _expressionService.EvaluateExpression(expression, variables);
@@ -87,7 +87,7 @@ namespace OchoaLopes.ExprEngine.Tests
         {
             // Arrange
             var expression = ":x == 1i && :y == 2i";
-            var variables = new Dictionary<string, object> { { ":x", 1 } };
+            var variables = new Dictionary<string, object> { { "x", 1 } };
 
             // Act
             var result = _expressionService.EvaluateExpression(expression, variables);
@@ -101,7 +101,7 @@ namespace OchoaLopes.ExprEngine.Tests
         {
             // Arrange
             var expression = "(:x + :y) * :z == :result";
-            var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 }, { ":z", 3 }, { ":result", 9 } };
+            var variables = new Dictionary<string, object> { { "x", 1 }, { "y", 2 }, { "z", 3 }, { "result", 9 } };
 
             // Act
             var result = _expressionService.EvaluateExpression(expression, variables);
@@ -115,7 +115,7 @@ namespace OchoaLopes.ExprEngine.Tests
         {
             // Arrange
             var expression = "(:x + :y) * :z == :result";
-            var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 }, { ":z", 3 }, { ":result", 10 } };
+            var variables = new Dictionary<string, object> { { "x", 1 }, { "y", 2 }, { "z", 3 }, { "result", 10 } };
 
             // Act
             var result = _expressionService.EvaluateExpression(expression, variables);
@@ -129,7 +129,7 @@ namespace OchoaLopes.ExprEngine.Tests
         {
             // Arrange
             var expression = "(:x > :y) && (:z < :w) || (:result == :z)";
-            var variables = new Dictionary<string, object> { { ":x", 1 }, { ":y", 2 }, { ":z", 3 }, { ":w", 4 }, { ":result", 3 } };
+            var variables = new Dictionary<string, object> { { "x", 1 }, { "y", 2 }, { "z", 3 }, { "w", 4 }, { "result", 3 } };
 
             // Act
             var result = _expressionService.EvaluateExpression(expression, variables);
@@ -145,14 +145,14 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = "((:x > :y) && (:z < :w)) || ((:a == :b) && (:c != :d))";
             var variables = new Dictionary<string, object>
             {
-                { ":x", 1 },
-                { ":y", 2 },
-                { ":z", 3 },
-                { ":w", 4 },
-                { ":a", 5 },
-                { ":b", 5 },
-                { ":c", 6 },
-                { ":d", 7 }
+                { "x", 1 },
+                { "y", 2 },
+                { "z", 3 },
+                { "w", 4 },
+                { "a", 5 },
+                { "b", 5 },
+                { "c", 6 },
+                { "d", 7 }
             };
 
             // Act
@@ -169,14 +169,14 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = "((:x > :y) && (:z < :w)) || ((:a == :b) && (:c != :d))";
             var variables = new Dictionary<string, object>
             {
-                { ":x", 1 },
-                { ":y", 2 },
-                { ":z", 3 },
-                { ":w", 4 },
-                { ":a", 5 },
-                { ":b", 5 },
-                { ":c", 6 },
-                { ":d", 7 }
+                { "x", 1 },
+                { "y", 2 },
+                { "z", 3 },
+                { "w", 4 },
+                { "a", 5 },
+                { "b", 5 },
+                { "c", 6 },
+                { "d", 7 }
             };
 
             // Act
@@ -193,14 +193,14 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = "((:x > :y) && (:z < :w) && || ((:a == :b) && (:c != :d))"; // Syntax error
             var variables = new Dictionary<string, object>
             {
-                { ":x", 1 },
-                { ":y", 2 },
-                { ":z", 3 },
-                { ":w", 4 },
-                { ":a", 5 },
-                { ":b", 5 },
-                { ":c", 6 },
-                { ":d", 7 }
+                { "x", 1 },
+                { "y", 2 },
+                { "z", 3 },
+                { "w", 4 },
+                { "a", 5 },
+                { "b", 5 },
+                { "c", 6 },
+                { "d", 7 }
             };
 
             // Act
@@ -273,8 +273,8 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = "((:x + 4i) + :z) == 10i";
             var variables = new Dictionary<string, object>
             {
-                { ":x", 4 },
-                { ":z", 2 }
+                { "x", 4 },
+                { "z", 2 }
             };
 
             // Act
@@ -291,8 +291,8 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = "((:x + 4i) + :z) == 9i";
             var variables = new Dictionary<string, object>
             {
-                { ":x", 4 },
-                { ":z", 2 }
+                { "x", 4 },
+                { "z", 2 }
             };
 
             // Act
@@ -309,8 +309,8 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = "((:x + -4i) + :z) == 2i";
             var variables = new Dictionary<string, object>
             {
-                { ":x", 4 },
-                { ":z", 2 }
+                { "x", 4 },
+                { "z", 2 }
             };
 
             // Act
@@ -327,8 +327,8 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = "(:x + 1i) * (5i - :z) <= 15i";
             var variables = new Dictionary<string, object>
             {
-                { ":x", 4 },
-                { ":z", 2 }
+                { "x", 4 },
+                { "z", 2 }
             };
 
             // Act
@@ -345,7 +345,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = ":result";
             var variables = new Dictionary<string, object>
             {
-                { ":result", true }
+                { "result", true }
             };
 
             // Act
@@ -362,8 +362,8 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = "(:x + 1D) * (5i - :z) - 5f";
             var variables = new Dictionary<string, object>
             {
-                { ":x", 4 },
-                { ":z", 2 }
+                { "x", 4 },
+                { "z", 2 }
             };
 
             // Act
@@ -380,7 +380,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = ":x == null";
             var variables = new Dictionary<string, object>
             {
-                { ":x", null }
+                { "x", null }
             };
 
             // Act
@@ -397,7 +397,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = ":x != null";
             var variables = new Dictionary<string, object>
             {
-                { ":x", 1 }
+                { "x", 1 }
             };
 
             // Act
@@ -414,7 +414,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = "!(:x == 1i)";
             var variables = new Dictionary<string, object>
             {
-                { ":x", 1 }
+                { "x", 1 }
             };
 
             // Act
@@ -431,7 +431,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = "!:x";
             var variables = new Dictionary<string, object>
             {
-                { ":x", true }
+                { "x", true }
             };
 
             // Act
@@ -448,9 +448,9 @@ namespace OchoaLopes.ExprEngine.Tests
             var expression = "((:x + 5i) * :z) > (:y + 10d)";
             var variables = new Dictionary<string, object>
             {
-                { ":x", 1 },
-                { ":z", 5 },
-                { ":y", 2.5 }
+                { "x", 1 },
+                { "z", 5 },
+                { "y", 2.5 }
             };
 
             // Act

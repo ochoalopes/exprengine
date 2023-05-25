@@ -1,6 +1,6 @@
 # ExprEngine
 
-expressionService is a lightweight expression evaluation library that allows you to validate, evaluate, and compute mathematical expressions with support for variables.
+ExprEngine is a lightweight expression evaluation library that allows you to validate, evaluate, and compute mathematical expressions with support for variables.
 
 ## Getting Started
 
@@ -19,6 +19,11 @@ ExprEngine supports a few number formats as input parameters in expressions:
 - Float: Represented by appending an 'f' to the number. Example: "3.14f"
 - Double: Represented by appending an 'D' to the number. Example: "6.02D"
 - Decimal: Represented by appending a 'd' to the number. Example: "100.0d"
+
+### Variable
+To use variable you have to add a placeholder in your expression, then you can use a dictionary or an ordered list of values, this is available for ValidateExpression, EvaluateExpression and ComputeExpression.
+
+- String: ":firstVariable * 10i <= :secondVariable"
 
 ### Usage
 
@@ -40,7 +45,7 @@ var expressionService = new ExpressionService();
 string expression = "(:x + 5i) > 10i";
 var variables = new Dictionary<string, object>
 {
-    { ":x", 7 }
+    { "x", 7 }
 };
 
 bool isValid = expressionService.ValidateExpression(expression, variables);
@@ -49,13 +54,10 @@ bool isValid = expressionService.ValidateExpression(expression, variables);
 4. Evaluate an expression:
 
 ```csharp
-string expression = "(:x + 5i) > 10i";
-var variables = new Dictionary<string, object>
-{
-    { ":x", 7 }
-};
+string expression = "(:x > :y) && (:z < :w)";
+var values = new List<object> { 2, 4, 10, 5 }; // x=2, y=4, z=10, w=5
 
-bool result = expressionService.EvaluateExpression(expression, variables);
+bool result = expressionService.EvaluateExpression(expression, values);
 ```
 
 5. Compute an expression:
@@ -64,8 +66,8 @@ bool result = expressionService.EvaluateExpression(expression, variables);
 string expression = "(:x + 5i) * (3.14f - :y)";
 var variables = new Dictionary<string, object>
 {
-    { ":x", 7 },
-    { ":y", 2.5 }
+    { "x", 7 },
+    { "y", 2.5 }
 };
 
 object result = expressionService.ComputeExpression(expression, variables);
@@ -73,7 +75,7 @@ object result = expressionService.ComputeExpression(expression, variables);
 
 ### Additional Methods
 
-In addition to the basic expression evaluation functionality, the expressionService library provides the following methods:
+In addition to the basic expression evaluation functionality, the ExprEngine library provides the following methods:
 
 - `bool ValidateExpression(string expression)`: Validates the syntax and structure of an expression.
 
@@ -95,20 +97,20 @@ In addition to the basic expression evaluation functionality, the expressionServ
 
 ## 6. Limitations
 
-While expressionService provides a range of expression evaluation capabilities, it does have some limitations:
+While ExprEngine provides a range of expression evaluation capabilities, it does have some limitations:
 
 - The library supports a subset of mathematical and logical operations, including addition, subtraction, multiplication, division, comparison, logical AND, and logical OR.
 
 - The library only supports variables as input parameters. It does not provide facilities for defining custom functions or complex expressions.
 
-- expressionService is designed for simple arithmetic and logical expressions and may not be suitable for complex symbolic or mathematical computations.
+- ExprEngine is designed for simple arithmetic and logical expressions and may not be suitable for complex symbolic or mathematical computations.
 
 - The library may have performance limitations when dealing with large expressions or complex calculations. It is recommended to benchmark and profile your specific use cases to ensure satisfactory performance.
 
 ## 7. Feedback
 
-We welcome your feedback and contributions to the expressionService library. If you have any questions, suggestions, or issues, please feel free to open an issue on the GitHub repository. We appreciate your feedback and strive to continuously improve the library.
+We welcome your feedback and contributions to the ExprEngine library. If you have any questions, suggestions, or issues, please feel free to open an issue on the GitHub repository. We appreciate your feedback and strive to continuously improve the library.
 
 ## 8. License
 
-The expressionService library is licensed under the [Apache License 2.0](https://opensource.org/licenses/Apache-2.0). You are free to use, modify, and distribute this library in accordance with the terms of the license. Please see the [LICENSE](https://github.com/your/repo/blob/main/LICENSE) file for more details.
+The ExprEngine library is licensed under the [Apache License 2.0](https://opensource.org/licenses/Apache-2.0). You are free to use, modify, and distribute this library in accordance with the terms of the license. Please see the [LICENSE](https://github.com/your/repo/blob/main/LICENSE) file for more details.

@@ -21,11 +21,11 @@ namespace OchoaLopes.ExprEngine.Tests.Services
         {
             var expectedTokens = new List<Token>
             {
-                new Token(TokenTypeEnum.Variable, ":userName"),
+                new Token(TokenTypeEnum.Variable, "userName"),
                 new Token(TokenTypeEnum.Equal, "=="),
                 new Token(TokenTypeEnum.LiteralString, "'Test'"),
                 new Token(TokenTypeEnum.And, "&&"),
-                new Token(TokenTypeEnum.Variable, ":userAge"),
+                new Token(TokenTypeEnum.Variable, "userAge"),
                 new Token(TokenTypeEnum.GreaterThanOrEqual, ">="),
                 new Token(TokenTypeEnum.LiteralInteger, "18"),
             };
@@ -48,22 +48,22 @@ namespace OchoaLopes.ExprEngine.Tests.Services
 
             var expectedTokens = new List<Token>
             {
-                new Token(TokenTypeEnum.Variable, ":userName"),
+                new Token(TokenTypeEnum.Variable, "userName"),
                 new Token(TokenTypeEnum.Equal, "=="),
                 new Token(TokenTypeEnum.LiteralString, "'Test'"),
                 new Token(TokenTypeEnum.And, "&&"),
-                new Token(TokenTypeEnum.Variable, ":userAge"),
+                new Token(TokenTypeEnum.Variable, "userAge"),
                 new Token(TokenTypeEnum.GreaterThanOrEqual, ">="),
                 new Token(TokenTypeEnum.LiteralInteger, "18"),
                 new Token(TokenTypeEnum.Or, "||"),
-                new Token(TokenTypeEnum.Variable, ":userType"),
+                new Token(TokenTypeEnum.Variable, "userType"),
                 new Token(TokenTypeEnum.NotEqual, "!="),
                 new Token(TokenTypeEnum.LiteralString, "'Admin'"),
                 new Token(TokenTypeEnum.And, "&&"),
                 new Token(TokenTypeEnum.LeftParenthesis, "("),
-                new Token(TokenTypeEnum.Variable, ":isActive"),
+                new Token(TokenTypeEnum.Variable, "isActive"),
                 new Token(TokenTypeEnum.Or, "||"),
-                new Token(TokenTypeEnum.Variable, ":isBlocked"),
+                new Token(TokenTypeEnum.Variable, "isBlocked"),
                 new Token(TokenTypeEnum.RightParenthesis, ")")
             };
 
@@ -86,19 +86,19 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var expectedTokens = new List<Token>
             {
                 new Token(TokenTypeEnum.LeftParenthesis, "("),
-                new Token(TokenTypeEnum.Variable, ":value"),
+                new Token(TokenTypeEnum.Variable, "value"),
                 new Token(TokenTypeEnum.Add, "+"),
                 new Token(TokenTypeEnum.LiteralInteger, "15"),
                 new Token(TokenTypeEnum.RightParenthesis, ")"),
                 new Token(TokenTypeEnum.GreaterThan, ">"),
                 new Token(TokenTypeEnum.LeftParenthesis, "("),
-                new Token(TokenTypeEnum.Variable, ":product"),
+                new Token(TokenTypeEnum.Variable, "product"),
                 new Token(TokenTypeEnum.Divide, "/"),
                 new Token(TokenTypeEnum.LiteralDouble, "2"),
                 new Token(TokenTypeEnum.RightParenthesis, ")"),
                 new Token(TokenTypeEnum.Or, "||"),
                 new Token(TokenTypeEnum.LeftParenthesis, "("),
-                new Token(TokenTypeEnum.Variable, ":value"),
+                new Token(TokenTypeEnum.Variable, "value"),
                 new Token(TokenTypeEnum.Modulo, "%"),
                 new Token(TokenTypeEnum.LiteralInteger, "2"),
                 new Token(TokenTypeEnum.Equal, "=="),
@@ -125,19 +125,19 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var expectedTokens = new List<Token>
             {
                 new Token(TokenTypeEnum.LeftParenthesis, "("),
-                new Token(TokenTypeEnum.Variable, ":value"),
+                new Token(TokenTypeEnum.Variable, "value"),
                 new Token(TokenTypeEnum.Add, "+"),
                 new Token(TokenTypeEnum.LiteralDouble, "15.2"),
                 new Token(TokenTypeEnum.RightParenthesis, ")"),
                 new Token(TokenTypeEnum.GreaterThan, ">"),
                 new Token(TokenTypeEnum.LeftParenthesis, "("),
-                new Token(TokenTypeEnum.Variable, ":product"),
+                new Token(TokenTypeEnum.Variable, "product"),
                 new Token(TokenTypeEnum.Divide, "/"),
                 new Token(TokenTypeEnum.LiteralDouble, "2.7"),
                 new Token(TokenTypeEnum.RightParenthesis, ")"),
                 new Token(TokenTypeEnum.Or, "||"),
                 new Token(TokenTypeEnum.LeftParenthesis, "("),
-                new Token(TokenTypeEnum.Variable, ":value"),
+                new Token(TokenTypeEnum.Variable, "value"),
                 new Token(TokenTypeEnum.Modulo, "%"),
                 new Token(TokenTypeEnum.LiteralInteger, "2"),
                 new Token(TokenTypeEnum.Equal, "=="),
@@ -163,11 +163,11 @@ namespace OchoaLopes.ExprEngine.Tests.Services
 
             var expectedTokens = new List<Token>
             {
-                new Token(TokenTypeEnum.Variable, ":userName"),
+                new Token(TokenTypeEnum.Variable, "userName"),
                 new Token(TokenTypeEnum.Equal, "=="),
                 new Token(TokenTypeEnum.LiteralString, "'John Doe'"),
                 new Token(TokenTypeEnum.Or, "||"),
-                new Token(TokenTypeEnum.Variable, ":country"),
+                new Token(TokenTypeEnum.Variable, "country"),
                 new Token(TokenTypeEnum.Equal, "=="),
                 new Token(TokenTypeEnum.LiteralString, "'United States'")
             };
@@ -191,19 +191,19 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var expectedTokens = new List<Token>
             {
                 new Token(TokenTypeEnum.LeftParenthesis, "("),
-                new Token(TokenTypeEnum.Variable, ":value"),
+                new Token(TokenTypeEnum.Variable, "value"),
                 new Token(TokenTypeEnum.Add, "+"),
                 new Token(TokenTypeEnum.LiteralDecimal, "15.123"),
                 new Token(TokenTypeEnum.RightParenthesis, ")"),
                 new Token(TokenTypeEnum.GreaterThan, ">"),
                 new Token(TokenTypeEnum.LeftParenthesis, "("),
-                new Token(TokenTypeEnum.Variable, ":product"),
+                new Token(TokenTypeEnum.Variable, "product"),
                 new Token(TokenTypeEnum.Divide, "/"),
                 new Token(TokenTypeEnum.LiteralDecimal, "2.123"),
                 new Token(TokenTypeEnum.RightParenthesis, ")"),
                 new Token(TokenTypeEnum.Or, "||"),
                 new Token(TokenTypeEnum.LeftParenthesis, "("),
-                new Token(TokenTypeEnum.Variable, ":value"),
+                new Token(TokenTypeEnum.Variable, "value"),
                 new Token(TokenTypeEnum.Modulo, "%"),
                 new Token(TokenTypeEnum.LiteralDecimal, "2.1"),
                 new Token(TokenTypeEnum.Equal, "=="),
