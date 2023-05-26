@@ -1,5 +1,6 @@
 ﻿using OchoaLopes.ExprEngine.Interfaces;
 using OchoaLopes.ExprEngine.Operations;
+using OchoaLopes.ExprEngine.Validators;
 
 namespace OchoaLopes.ExprEngine.Expressions
 {
@@ -11,14 +12,9 @@ namespace OchoaLopes.ExprEngine.Expressions
         {
             var result = Operand.Evaluate(variables);
 
-            if (result is bool boolResult)
-            {
-                return !boolResult;
-            }
-            else
-            {
-                throw new InvalidOperationException("The operand of a Not operation must be a boolean.");
-            }
+            ExpressionValidator.ValidateNot(result);
+
+            return !(bool)result;
         }
     }
 }

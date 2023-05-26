@@ -1,11 +1,17 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
 using OchoaLopes.ExprEngine.Enums;
 using OchoaLopes.ExprEngine.ValueObjects;
 
 namespace OchoaLopes.ExprEngine.Validators
 {
-    internal static class TokenizerValidator
+    internal static class TokenValidator
     {
+        public static bool IsDateType(string token)
+        {
+            return token.StartsWith("'") && token.EndsWith("'t");
+        }
+
         public static bool IsVariable(string token)
         {
             return token.Trim().StartsWith(":");
@@ -91,44 +97,64 @@ namespace OchoaLopes.ExprEngine.Validators
             return token.Trim() == "-";
         }
 
-        public static bool IsLiteralInteger(string value)
+        public static bool IsLiteralInteger(string token)
         {
-            return Regex.IsMatch(value.Trim(), @"^-?\d+i$");
+            return Regex.IsMatch(token.Trim(), @"^-?\d+i$");
         }
 
-        public static bool IsLiteralDouble(string value)
+        public static bool IsLiteralDouble(string token, CultureInfo cultureInfo)
         {
-            return Regex.IsMatch(value.Trim(), @"^-?\d+(\.\d+)?D$");
+            var decimalSeparator = Regex.Escape(cultureInfo.NumberFormat.NumberDecimalSeparator);
+            return Regex.IsMatch(token.Trim(), @"^-?\d+(" + decimalSeparator + @"\d+)?D$");
         }
 
-        public static bool IsLiteralDecimal(string value)
+        public static bool IsLiteralDecimal(string token, CultureInfo cultureInfo)
         {
-            return Regex.IsMatch(value.Trim(), @"^-?\d+(\.\d+)?d$");
+            var decimalSeparator = Regex.Escape(cultureInfo.NumberFormat.NumberDecimalSeparator);
+            return Regex.IsMatch(token.Trim(), @"^-?\d+(" + decimalSeparator + @"\d+)?d$");
         }
 
-        public static bool IsLiteralFloat(string value)
+        public static bool IsLiteralFloat(string token, CultureInfo cultureInfo)
         {
-            return Regex.IsMatch(value.Trim(), @"^-?\d+(\.\d+)?f$");
+            var decimalSeparator = Regex.Escape(cultureInfo.NumberFormat.NumberDecimalSeparator);
+            return Regex.IsMatch(token.Trim(), @"^-?\d+(" + decimalSeparator + @"\d+)?f$");
         }
 
-        public static bool IsLiteralString(string value)
+        public static bool IsLiteralString(string token)
         {
-            return value.StartsWith("'") && value.EndsWith("'");
+            return token.StartsWith("'") && token.EndsWith("'");
         }
 
-        public static bool IsLiteralChar(string value)
+        public static bool IsLiteralChar(string token)
         {
-            return value.Length == 3 && value.StartsWith("'") && value.EndsWith("'");
+            return token.Length == 3 && token.StartsWith("'") && token.EndsWith("'");
         }
 
-        public static bool IsLiteralBoolean(string value)
+        public static bool IsLiteralBoolean(string token)
         {
-            return value.Trim().ToLower() == "true" || value.Trim().ToLower() == "false";
+            return token.Trim().ToLower() == "true" || token.Trim().ToLower() == "false";
         }
 
-        public static bool IsLiteralNull(string value)
+        public static bool IsLiteralNull(string token)
         {
-            return value.Trim().ToLower() == "null";
+            return token.Trim().ToLower() == "null";
+        }
+
+        public static bool IsLiteralDate(string token, CultureInfo cultureInfo)
+        {
+            if (IsDateType(token))
+            {
+                var potentialDateString = token.TrimEnd('t').Trim('\'');
+
+                string[] formats = { "yyyy-MM-dd", "dd/MM/yyyy", "MM/dd/yyyy", "yyyy/MM/dd" };
+
+                if (DateTime.TryParseExact(potentialDateString, formats, cultureInfo, DateTimeStyles.None, out _))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public static bool IsOperator(TokenTypeEnum type)

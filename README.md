@@ -12,13 +12,18 @@ The ExprEngine library can be installed via NuGet. Use the package manager conso
 Install-Package OchoaLopes.ExprEngine
 ```
 
-### Number Formats
-ExprEngine supports a few number formats as input parameters in expressions:
+### Values Formats
+ExprEngine supports a few formats as input parameters in expressions:
 
 - Integer: Represented by appending an 'i' to the number. Example: "10i"
 - Float: Represented by appending an 'f' to the number. Example: "3.14f"
 - Double: Represented by appending an 'D' to the number. Example: "6.02D"
 - Decimal: Represented by appending a 'd' to the number. Example: "100.0d"
+- Dates: Represented by appending a 't' to the string. Example: " '2001-01-01't "
+
+## Dates
+
+ExprEngine provides support for date operations, making it flexible and adaptable to a variety of scenarios. It allows for adding or subtracting days from a date and comparing dates.
 
 ### Variable
 To use variable you have to add a placeholder in your expression, then you can use a dictionary or an ordered list of values, this is available for ValidateExpression, EvaluateExpression and ComputeExpression.
@@ -26,6 +31,20 @@ To use variable you have to add a placeholder in your expression, then you can u
 ```csharp
 string expression = ":firstVariable * 10i <= :secondVariable";
 ```
+
+#### Comparison
+
+ExprEngine supports comparison of dates with operators like `==`, `!=`, `>`, `<`, `>=`, `<=`. For example, `:birthDate > :otherDate`.
+
+Please note that the date format and operations depend on the `CultureInfo` passed to the `ExpressionService` constructor.
+
+This will influence the following:
+
+- Number format (decimal separator, thousand separator, etc.)
+- Date format
+- First day of the week
+- Whether week can be split between two years (ISO 8601)
+- Mathematical operations based on specific cultural norms
 
 ### Usage
 
@@ -79,23 +98,23 @@ object result = expressionService.ComputeExpression(expression, variables);
 
 In addition to the basic expression evaluation functionality, the ExprEngine library provides the following methods:
 
-- `bool ValidateExpression(string expression)`: Validates the syntax and structure of an expression.
+- `bool ValidateExpression(string expression, CultureInfo? cultureInfo = null)`: Validates the syntax and structure of an expression, considering the specified culture information.
 
-- `bool ValidateExpression(string expression, IDictionary<string, object> variables)`: Validates the syntax and structure of an expression. You have to provide a dictionary of variables and their values to validate expressions with variables.
+- `bool ValidateExpression(string expression, IDictionary<string, object> variables, CultureInfo? cultureInfo = null)`: Validates the syntax and structure of an expression with the help of a dictionary of variables and their values, considering the specified culture information.
 
-- `bool ValidateExpression(string expression, IList<object> values)`: Validates the syntax and structure of an expression. You have to provide a list of values to validate expressions with indexed placeholders.
+- `bool ValidateExpression(string expression, IList<object> values, CultureInfo? cultureInfo = null)`: Validates the syntax and structure of an expression with the help of a list of values for indexed placeholders, considering the specified culture information.
 
-- `bool EvaluateExpression(string expression)`: Evaluates the expression and returns a boolean result.
+- `bool EvaluateExpression(string expression, CultureInfo? cultureInfo = null)`: Evaluates the expression and returns a boolean result, considering the specified culture information.
 
-- `bool EvaluateExpression(string expression, IDictionary<string, object> variables)`: Evaluates the expression and returns a boolean result. You have to provide a dictionary of variables and their values to evaluate expressions with variables.
+- `bool EvaluateExpression(string expression, IDictionary<string, object> variables, CultureInfo? cultureInfo = null)`: Evaluates the expression and returns a boolean result with the help of a dictionary of variables and their values, considering the specified culture information.
 
-- `bool EvaluateExpression(string expression, IList<object> values)`: Evaluates the expression and returns a boolean result. You have to provide a list of values to evaluate expressions with indexed placeholders.
+- `bool EvaluateExpression(string expression, IList<object> values, CultureInfo? cultureInfo = null)`: Evaluates the expression and returns a boolean result with the help of a list of values for indexed placeholders, considering the specified culture information.
 
-- `object ComputeExpression(string expression)`: Evaluates and computes the expression, returning the result.
+- `object ComputeExpression(string expression, CultureInfo? cultureInfo = null)`: Evaluates and computes the expression, returning the result, considering the specified culture information.
 
-- `object ComputeExpression(string expression, IDictionary<string, object> variables)`: Evaluates and computes the expression, returning the result. You have to provide a dictionary of variables and their values to compute expressions with variables.
+- `object ComputeExpression(string expression, IDictionary<string, object> variables, CultureInfo? cultureInfo = null)`: Evaluates and computes the expression, returning the result with the help of a dictionary of variables and their values, considering the specified culture information.
 
-- `object ComputeExpression(string expression, IList<object> values)`: Evaluates and computes the expression, returning the result. You have to provide a list of values to compute expressions with indexed placeholders.
+- `object ComputeExpression(string expression, IList<object> values, CultureInfo? cultureInfo = null)`: Evaluates and computes the expression, returning the result with the help of a list of values for indexed placeholders, considering the specified culture information.
 
 ## 6. Limitations
 

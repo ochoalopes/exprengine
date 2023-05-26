@@ -12,30 +12,7 @@ namespace OchoaLopes.ExprEngine.Expressions
             var leftResult = Left.Evaluate(variables);
             var rightResult = Right.Evaluate(variables);
 
-            if (leftResult is decimal leftDecimal && rightResult is decimal rightDecimal)
-            {
-                return leftDecimal != rightDecimal;
-            }
-            else if (leftResult is double leftDouble && rightResult is double rightDouble)
-            {
-                return leftDouble != rightDouble;
-            }
-            else if (leftResult is int leftInt && rightResult is int rightint)
-            {
-                return leftInt != rightint;
-            }
-            else if (leftResult is bool leftBool && rightResult is bool rightBool)
-            {
-                return leftBool != rightBool;
-            }
-            else if (leftResult is string leftString && rightResult is string rightString)
-            {
-                return leftString != rightString;
-            }
-            else
-            {
-                return leftResult != rightResult;
-            }
+            return !Equals(leftResult, rightResult);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Globalization;
 using OchoaLopes.ExprEngine.Enums;
 using OchoaLopes.ExprEngine.Helpers;
 using OchoaLopes.ExprEngine.Interfaces;
@@ -9,24 +9,36 @@ namespace OchoaLopes.ExprEngine.Services
 {
     internal class LexerService : ILexerService
     {
-        private static readonly Regex TokenRegex = new Regex(@"(:\w+|==|!=|>=|<=|<|>|&&|\|\||!|\+|-|\*|/|%|'[^']*'|true|false|\d+\.?\d*[idfD]?|\d*\.\d+[idfD]?|null|is\s+not\s+null|is\s+null|\(|\))", RegexOptions.IgnoreCase);
+        private readonly ITokenizerService _tokenizerService;
+        private CultureInfo _cultureInfo;
 
-        public List<Token> Tokenize(string expression)
+        public LexerService(ITokenizerService tokenizerService, CultureInfo cultureInfo)
         {
-            var matches = TokenRegex.Matches(expression);
+            _tokenizerService = tokenizerService;
+            _cultureInfo = cultureInfo;
+        }
+
+        public List<Token> LexExpression(string expression, CultureInfo? cultureInfo = null)
+        {
+            if (cultureInfo != null)
+            {
+                _cultureInfo = cultureInfo;
+            }
+
             var tokens = new List<Token>();
 
-            foreach (Match match in matches)
+            var tokenizedExpression = _tokenizerService.TokenizeExpression(expression, _cultureInfo);
+
+            foreach(var token in tokenizedExpression)
             {
-                var value = match.Value;
-                var type = TokenizerHelper.GetTokenType(value);
+                var type = LexerHelper.GetTokenType(token, _cultureInfo);
 
                 if (type == TokenTypeEnum.Subtract)
                 {
-                    type = TokenizerValidator.IsUnaryMinus(tokens, tokens.Count) ? TokenTypeEnum.UnaryMinus : TokenTypeEnum.BinaryMinus;
+                    type = TokenValidator.IsUnaryMinus(tokens, tokens.Count) ? TokenTypeEnum.UnaryMinus : TokenTypeEnum.BinaryMinus;
                 }
 
-                tokens.Add(new Token(type, TokenizerHelper.CleanUpTokenValue(type, value)));
+                tokens.Add(new Token(type, LexerHelper.CleanUpTokenValue(type, token)));
             }
 
             return tokens;

@@ -1,5 +1,6 @@
 ﻿using OchoaLopes.ExprEngine.Interfaces;
 using OchoaLopes.ExprEngine.Operations;
+using OchoaLopes.ExprEngine.Validators;
 
 namespace OchoaLopes.ExprEngine.Expressions
 {
@@ -12,14 +13,9 @@ namespace OchoaLopes.ExprEngine.Expressions
             var leftResult = Left.Evaluate(variables);
             var rightResult = Right.Evaluate(variables);
 
-            if (leftResult is bool leftBool && rightResult is bool rightBool)
-            {
-                return leftBool && rightBool;
-            }
-            else
-            {
-                throw new InvalidOperationException("Both operands of an And operation must be booleans.");
-            }
+            ExpressionValidator.ValidateAnd(leftResult, rightResult);
+
+            return (bool)leftResult && (bool)rightResult;
         }
     }
 }

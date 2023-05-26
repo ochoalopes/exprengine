@@ -1,6 +1,7 @@
 ﻿using OchoaLopes.ExprEngine.Helpers;
 using OchoaLopes.ExprEngine.Interfaces;
 using OchoaLopes.ExprEngine.Operations;
+using OchoaLopes.ExprEngine.Validators;
 
 namespace OchoaLopes.ExprEngine.Expressions
 {
@@ -13,22 +14,9 @@ namespace OchoaLopes.ExprEngine.Expressions
             var leftResult = Left.Evaluate(variables);
             var rightResult = Right.Evaluate(variables);
 
-            if (leftResult is string leftString || rightResult is string rightString)
-            {
-                throw new InvalidOperationException("Both values cannot be a string");
-            }
+            ExpressionValidator.ValidateModulo(leftResult, rightResult);
 
-            if (leftResult is bool leftBool || rightResult is bool rightBool)
-            {
-                throw new InvalidOperationException("Both operands of a comparison cannot be a boolean type.");
-            }
-
-            if (rightResult is double rightDouble && Math.Abs(rightDouble) < double.Epsilon)
-            {
-                throw new DivideByZeroException("Division by zero is not allowed.");
-            }
-
-            return OperationHelper.Operate(leftResult, rightResult, (a, b) => a % b);
+            return OperationHelper.OperateNumbers(leftResult, rightResult, (a, b) => a % b);
         }
     }
 }
