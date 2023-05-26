@@ -25,10 +25,15 @@ namespace OchoaLopes.ExprEngine.Expressions
 
             if (leftResult is bool leftBool || rightResult is bool rightBool)
             {
-                throw new InvalidOperationException("Both operands of a comparison cannot be a boolean type.");
+                throw new InvalidOperationException("Both operands of a division cannot be a boolean type.");
             }
 
-            return OperationHelper.Operate(leftResult, rightResult, (a, b) => a / b);
+            if (leftResult is DateTime leftDate || rightResult is DateTime rightDate)
+            {
+                throw new InvalidOperationException("Both values cannot be a date");
+            }
+
+            return OperationHelper.OperateNumbers(leftResult, rightResult, (a, b) => a / b);
         }
     }
 }

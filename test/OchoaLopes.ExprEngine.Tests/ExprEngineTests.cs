@@ -1,4 +1,4 @@
-﻿using OchoaLopes.ExprEngine;
+﻿using System.Globalization;
 
 namespace OchoaLopes.ExprEngine.Tests
 {
@@ -9,7 +9,7 @@ namespace OchoaLopes.ExprEngine.Tests
         [SetUp]
         public void Setup()
         {
-            _expressionService = new ExpressionService();
+            _expressionService = new ExpressionService(CultureInfo.InvariantCulture);
         }
 
         [Test]
@@ -508,6 +508,171 @@ namespace OchoaLopes.ExprEngine.Tests
             {
                 { "input", "test"}
             };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpression_DecimalComparison_ReturnsTrue()
+        {
+            // Arrange
+            var expression = ":input > 1.5d";
+            var variables = new Dictionary<string, object>
+            {
+                { "input", 1.6 }
+            };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpression_DoubleComparisonBrazilianFormat_ReturnsTrue()
+        {
+            // Arrange
+            var expression = ":input > 1,5D";
+            var variables = new Dictionary<string, object>
+            {
+                { "input", 1.6 }
+            };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables, new CultureInfo("pt-BR"));
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpression_FloatComparisonFrenchFormat_ReturnsTrue()
+        {
+            // Arrange
+            var expression = ":input > 1,5D";
+            var variables = new Dictionary<string, object>
+            {
+                { "input", 1.6 }
+            };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables, new CultureInfo("fr-FR"));
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpressionWithVariables_WithValidDateInput_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = ":birthDate == '2001-01-01't";
+            var variables = new Dictionary<string, object> { { "birthDate", new DateTime(2001, 1, 1) } };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpressionWithVariables_WithValidDateFormat_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = ":birthDate == '01/01/2001't";
+            var variables = new Dictionary<string, object> { { "birthDate", new DateTime(2001, 1, 1) } };
+            var cultureInfo = new CultureInfo("pt-BR"); // format: dd/MM/yyyy
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables, cultureInfo);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpressionWithVariables_WithInvalidDateInput_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = ":birthDate == '2001-01-02't";
+            var variables = new Dictionary<string, object> { { "birthDate", new DateTime(2001, 1, 1) } };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void EvaluateExpressionWithVariables_WithDateComparison_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = ":birthDate < '2001-02-01't";
+            var variables = new Dictionary<string, object> { { "birthDate", new DateTime(2001, 1, 1) } };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpressionWithVariables_WithDateComparisonFrenchFormat_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = ":birthDate < '01/02/2001't";
+            var variables = new Dictionary<string, object> { { "birthDate", new DateTime(2001, 1, 1) } };
+            var cultureInfo = new CultureInfo("fr-FR"); // format: dd/MM/yyyy
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables, cultureInfo);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpressionWithVariables_WithInvalidDateComparison_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = ":birthDate > '2001-02-01't";
+            var variables = new Dictionary<string, object> { { "birthDate", new DateTime(2001, 1, 1) } };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void EvaluateExpressionWithVariables_AddDaysToDate_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = ":birthDate + 1i == '2001-01-02't";
+            var variables = new Dictionary<string, object> { { "birthDate", new DateTime(2001, 1, 1) } };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpressionWithVariables_SubtractDaysToDate_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = ":birthDate - 1i == '2001-01-02't";
+            var variables = new Dictionary<string, object> { { "birthDate", new DateTime(2001, 1, 3) } };
 
             // Act
             var result = _expressionService.EvaluateExpression(expression, variables);

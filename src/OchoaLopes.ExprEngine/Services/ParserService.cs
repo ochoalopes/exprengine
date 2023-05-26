@@ -1,4 +1,5 @@
-﻿using OchoaLopes.ExprEngine.Enums;
+﻿using System.Globalization;
+using OchoaLopes.ExprEngine.Enums;
 using OchoaLopes.ExprEngine.Expressions;
 using OchoaLopes.ExprEngine.Interfaces;
 using OchoaLopes.ExprEngine.ValueObjects;
@@ -9,12 +10,22 @@ namespace OchoaLopes.ExprEngine.Services
     {
         private IList<Token>? _tokens;
         private int _currentIndex;
+        private CultureInfo _cultureInfo;
 
+        public ParserService(CultureInfo cultureInfo)
+        {
+            _cultureInfo = cultureInfo;
+        }
 
-        public IExpression Parse(IList<Token>? tokens)
+        public IExpression Parse(IList<Token>? tokens, CultureInfo? cultureInfo = null)
         {
             _tokens = tokens;
             _currentIndex = 0;
+
+            if (cultureInfo != null)
+            {
+                _cultureInfo = cultureInfo;
+            }
 
             return ParseExpression();
         }
@@ -172,6 +183,7 @@ namespace OchoaLopes.ExprEngine.Services
                 TokenTypeEnum.LiteralChar,
                 TokenTypeEnum.LiteralBoolean,
                 TokenTypeEnum.LiteralNull,
+                TokenTypeEnum.LiteralDateTime,
                 TokenTypeEnum.Variable))
             {
                 var token = ConsumeToken();
@@ -184,13 +196,13 @@ namespace OchoaLopes.ExprEngine.Services
                 switch (token.Type)
                 {
                     case TokenTypeEnum.LiteralInteger:
-                        return new Literal(int.Parse(token.Value));
+                        return new Literal(int.Parse(token.Value, _cultureInfo));
                     case TokenTypeEnum.LiteralDouble:
-                        return new Literal(double.Parse(token.Value));
+                        return new Literal(double.Parse(token.Value, NumberStyles.Any, _cultureInfo));
                     case TokenTypeEnum.LiteralDecimal:
-                        return new Literal(decimal.Parse(token.Value));
+                        return new Literal(decimal.Parse(token.Value, NumberStyles.Any, _cultureInfo));
                     case TokenTypeEnum.LiteralFloat:
-                        return new Literal(float.Parse(token.Value));
+                        return new Literal(float.Parse(token.Value, NumberStyles.Any, _cultureInfo));
                     case TokenTypeEnum.LiteralString:
                         return new Literal(token.Value.ToString());
                     case TokenTypeEnum.LiteralChar:
@@ -199,6 +211,8 @@ namespace OchoaLopes.ExprEngine.Services
                         return new Literal(bool.Parse(token.Value));
                     case TokenTypeEnum.LiteralNull:
                         return new Literal(null);
+                    case TokenTypeEnum.LiteralDateTime:
+                        return new Literal(DateTime.Parse(token.Value, _cultureInfo));
                     case TokenTypeEnum.Variable:
                         return new Variable(token.Value);
                     default:

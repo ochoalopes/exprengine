@@ -1,6 +1,8 @@
-﻿using OchoaLopes.ExprEngine.Enums;
+﻿using System.Globalization;
+using OchoaLopes.ExprEngine.Enums;
 using OchoaLopes.ExprEngine.Interfaces;
 using OchoaLopes.ExprEngine.Services;
+using OchoaLopes.ExprEngine.ValueObjects;
 
 namespace OchoaLopes.ExprEngine
 {
@@ -12,17 +14,23 @@ namespace OchoaLopes.ExprEngine
 
         public ExpressionService()
         {
-            _lexerService = new LexerService();
-            _parserService = new ParserService();
+            _lexerService = new LexerService(new TokenizerService(CultureInfo.CurrentCulture), CultureInfo.CurrentCulture);
+            _parserService = new ParserService(CultureInfo.CurrentCulture);
             _evaluatorService = new EvaluatorService();
         }
 
-        public bool ValidateExpression(string expression)
+        public ExpressionService(CultureInfo cultureInfo)
+        {
+            _lexerService = new LexerService(new TokenizerService(cultureInfo), cultureInfo);
+            _parserService = new ParserService(cultureInfo);
+            _evaluatorService = new EvaluatorService();
+        }
+
+        public bool ValidateExpression(string expression, CultureInfo? cultureInfo = null)
         {
             try
             {
-                var tokens = _lexerService.Tokenize(expression);
-                var parsedExpression = _parserService.Parse(tokens);
+                ParseExpression(expression, cultureInfo);
 
                 return true;
             }
@@ -32,12 +40,11 @@ namespace OchoaLopes.ExprEngine
             }
         }
 
-        public bool ValidateExpression(string expression, IDictionary<string, object> variables)
+        public bool ValidateExpression(string expression, IDictionary<string, object> variables, CultureInfo? cultureInfo = null)
         {
             try
             {
-                var tokens = _lexerService.Tokenize(expression);
-                var parsedExpression = _parserService.Parse(tokens);
+                var (tokens, parsedExpression) = ParseExpression(expression, cultureInfo);
 
                 foreach (var token in tokens)
                 {
@@ -60,12 +67,11 @@ namespace OchoaLopes.ExprEngine
             }
         }
 
-        public bool ValidateExpression(string expression, IList<object> values)
+        public bool ValidateExpression(string expression, IList<object> values, CultureInfo? cultureInfo = null)
         {
             try
             {
-                var tokens = _lexerService.Tokenize(expression);
-                var parsedExpression = _parserService.Parse(tokens);
+                var (tokens, parsedExpression) = ParseExpression(expression, cultureInfo);
 
                 var variablesCount = tokens.Count(v => v.Type == TokenTypeEnum.Variable);
 
@@ -82,11 +88,11 @@ namespace OchoaLopes.ExprEngine
             }
         }
 
-        public bool EvaluateExpression(string expression)
+        public bool EvaluateExpression(string expression, CultureInfo? cultureInfo = null)
         {
             try
             {
-                return Convert.ToBoolean(ComputeExpression(expression, new Dictionary<string, object>()));
+                return Convert.ToBoolean(ComputeExpression(expression, new Dictionary<string, object>(), cultureInfo));
             }
             catch
             {
@@ -94,11 +100,11 @@ namespace OchoaLopes.ExprEngine
             }
         }
 
-        public bool EvaluateExpression(string expression, IDictionary<string, object> variables)
+        public bool EvaluateExpression(string expression, IDictionary<string, object> variables, CultureInfo? cultureInfo = null)
         {
             try
             {
-                return Convert.ToBoolean(ComputeExpression(expression, variables));
+                return Convert.ToBoolean(ComputeExpression(expression, variables, cultureInfo));
             }
             catch
             {
@@ -106,11 +112,11 @@ namespace OchoaLopes.ExprEngine
             }
         }
 
-        public bool EvaluateExpression(string expression, IList<object> values)
+        public bool EvaluateExpression(string expression, IList<object> values, CultureInfo? cultureInfo = null)
         {
             try
             {
-                return Convert.ToBoolean(ComputeExpression(expression, values));
+                return Convert.ToBoolean(ComputeExpression(expression, values, cultureInfo));
             }
             catch
             {
@@ -118,41 +124,38 @@ namespace OchoaLopes.ExprEngine
             }
         }
 
-        public object ComputeExpression(string expression)
+        public object ComputeExpression(string expression, CultureInfo? cultureInfo = null)
         {
-            if (!ValidateExpression(expression))
-            {
-                throw new InvalidOperationException("Expression is not valid");
-            }
+            var (tokens, parsedExpression) = ParseExpression(expression, cultureInfo);
 
-            var tokens = _lexerService.Tokenize(expression);
-            var parsedExpression = _parserService.Parse(tokens);
+            if (parsedExpression == null)
+            {
+                throw new InvalidOperationException("Expression is not valid.");
+            }
 
             return _evaluatorService.EvaluateExpression(parsedExpression, new Dictionary<string, object>());
         }
 
-        public object ComputeExpression(string expression, IDictionary<string, object> variables)
+        public object ComputeExpression(string expression, IDictionary<string, object> variables, CultureInfo? cultureInfo = null)
         {
-            if (!ValidateExpression(expression, variables))
-            {
-                throw new InvalidOperationException("Expression is not valid");
-            }
+            var (tokens, parsedExpression) = ParseExpression(expression, cultureInfo);
 
-            var tokens = _lexerService.Tokenize(expression);
-            var parsedExpression = _parserService.Parse(tokens);
+            if (parsedExpression == null)
+            {
+                throw new InvalidOperationException("Expression is not valid.");
+            }
 
             return _evaluatorService.EvaluateExpression(parsedExpression, variables ?? new Dictionary<string, object>());
         }
 
-        public object ComputeExpression(string expression, IList<object> values)
+        public object ComputeExpression(string expression, IList<object> values, CultureInfo? cultureInfo = null)
         {
-            if (!ValidateExpression(expression, values))
-            {
-                throw new InvalidOperationException("Expression is not valid");
-            }
+            var (tokens, parsedExpression) = ParseExpression(expression, cultureInfo);
 
-            var tokens = _lexerService.Tokenize(expression);
-            var parsedExpression = _parserService.Parse(tokens);
+            if (parsedExpression == null)
+            {
+                throw new InvalidOperationException("Expression is not valid.");
+            }
 
             var variables = new Dictionary<string, object>();
             var i = 0;
@@ -174,5 +177,15 @@ namespace OchoaLopes.ExprEngine
 
             return _evaluatorService.EvaluateExpression(parsedExpression, variables);
         }
+
+        #region Private Methods
+        private (List<Token>, IExpression?) ParseExpression(string expression, CultureInfo? cultureInfo = null)
+        {
+            var tokens = _lexerService.LexExpression(expression, cultureInfo);
+            var parsedExpression = _parserService.Parse(tokens, cultureInfo);
+
+            return (tokens, parsedExpression);
+        }
+        #endregion
     }
 }

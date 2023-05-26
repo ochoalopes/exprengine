@@ -5,7 +5,7 @@ namespace OchoaLopes.ExprEngine.Helpers
 {
     internal static class OperationHelper
     {
-        public static object Operate(object left, object right, NumericOperation operation)
+        public static object OperateNumbers(object left, object right, NumericOperation operation)
         {
             if (left is int leftInt)
             {
@@ -51,12 +51,38 @@ namespace OchoaLopes.ExprEngine.Helpers
                 else if (right is float rightFloat)
                     return operation(leftFloat, rightFloat);
             }
-            else if (left is string leftString && right is string rightString)
+
+            throw new InvalidOperationException("Both operands of a numeric operation must be of type int, double or decimal.");
+        }
+
+        public static object OperateAddString(object left, object right)
+        {
+            if (left is string leftString && right is string rightString)
             {
                 return leftString + rightString;
             }
 
-            throw new InvalidOperationException("Both operands of a numeric operation must be of type int, double or decimal.");
+            throw new InvalidOperationException("Both operands of a string operation must be of type string.");
+        }
+
+        public static object OperateAddDate(object left, object right)
+        {
+            if (left is DateTime leftDate && right is int rightInt)
+            {
+                return leftDate.AddDays(rightInt);
+            }
+
+            throw new InvalidOperationException("Add operation with dates can be only with integers.");
+        }
+
+        public static object OperateSubtractDate(object left, object right)
+        {
+            if (left is DateTime leftDate && right is int rightInt)
+            {
+                return leftDate.AddDays(-rightInt);
+            }
+
+            throw new InvalidOperationException("Subtract operation with dates can be only with integers.");
         }
 
 

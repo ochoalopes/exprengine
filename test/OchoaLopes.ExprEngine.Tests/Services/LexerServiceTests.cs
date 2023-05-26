@@ -1,4 +1,5 @@
-﻿using OchoaLopes.ExprEngine.Enums;
+﻿using System.Globalization;
+using OchoaLopes.ExprEngine.Enums;
 using OchoaLopes.ExprEngine.Interfaces;
 using OchoaLopes.ExprEngine.Services;
 using OchoaLopes.ExprEngine.ValueObjects;
@@ -8,17 +9,18 @@ namespace OchoaLopes.ExprEngine.Tests.Services
     [TestFixture]
     internal class LexerServiceTests
 	{
-        private ILexerService lexer;
+        private ILexerService _lexer;
 
         [SetUp]
         public void SetUp()
         {
-            lexer = new LexerService();
+            _lexer = new LexerService(new TokenizerService(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
         }
 
         [Test]
         public void Tokenize_UserName_And_Age_Test()
         {
+            // Arrange
             var expectedTokens = new List<Token>
             {
                 new Token(TokenTypeEnum.Variable, "userName"),
@@ -30,8 +32,10 @@ namespace OchoaLopes.ExprEngine.Tests.Services
                 new Token(TokenTypeEnum.LiteralInteger, "18"),
             };
 
-            var actualTokens = lexer.Tokenize(":userName == 'Test' && :userAge >= 18i");
+            // Act
+            var actualTokens = _lexer.LexExpression(":userName == 'Test' && :userAge >= 18i");
 
+            // Assert
             Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
 
             for (int i = 0; i < expectedTokens.Count; i++)
@@ -44,6 +48,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
         [Test]
         public void Tokenize_With_More_Conditions_Test()
         {
+            // Arrange
             string expression = ":userName == 'Test' && :userAge >= 18i || :userType != 'Admin' && ( :isActive || :isBlocked )";
 
             var expectedTokens = new List<Token>
@@ -67,8 +72,10 @@ namespace OchoaLopes.ExprEngine.Tests.Services
                 new Token(TokenTypeEnum.RightParenthesis, ")")
             };
 
-            var actualTokens = lexer.Tokenize(expression);
+            // Act
+            var actualTokens = _lexer.LexExpression(expression);
 
+            // Assert
             Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
 
             for (int i = 0; i < expectedTokens.Count; i++)
@@ -81,6 +88,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
         [Test]
         public void Tokenize_With_LiteralIntegers_Test()
         {
+            // Arrange
             string expression = "(:value + 15i) > (:product / 2D) || (:value % 2i == 0i)";
 
             var expectedTokens = new List<Token>
@@ -106,8 +114,10 @@ namespace OchoaLopes.ExprEngine.Tests.Services
                 new Token(TokenTypeEnum.RightParenthesis, ")"),
             };
 
-            var actualTokens = lexer.Tokenize(expression);
+            // Act
+            var actualTokens = _lexer.LexExpression(expression);
 
+            // Assert
             Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
 
             for (int i = 0; i < expectedTokens.Count; i++)
@@ -120,6 +130,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
         [Test]
         public void Tokenize_With_LiteralDecimals_Test()
         {
+            // Arrange
             string expression = "(:value + 15.2D) > (:product / 2.7D) || (:value % 2i == 0i)";
 
             var expectedTokens = new List<Token>
@@ -145,8 +156,10 @@ namespace OchoaLopes.ExprEngine.Tests.Services
                 new Token(TokenTypeEnum.RightParenthesis, ")"),
             };
 
-            var actualTokens = lexer.Tokenize(expression);
+            // Act
+            var actualTokens = _lexer.LexExpression(expression);
 
+            // Assert
             Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
 
             for (int i = 0; i < expectedTokens.Count; i++)
@@ -159,6 +172,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
         [Test]
         public void Tokenize_With_LiteralStrings_Test()
         {
+            // Arrange
             string expression = ":userName == 'John Doe' || :country == 'United States'";
 
             var expectedTokens = new List<Token>
@@ -172,8 +186,10 @@ namespace OchoaLopes.ExprEngine.Tests.Services
                 new Token(TokenTypeEnum.LiteralString, "United States")
             };
 
-            var actualTokens = lexer.Tokenize(expression);
+            // Act
+            var actualTokens = _lexer.LexExpression(expression);
 
+            // Assert
             Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
 
             for (int i = 0; i < expectedTokens.Count; i++)
@@ -186,6 +202,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
         [Test]
         public void Tokenize_With_LiteralDoubles_Test()
         {
+            // Arrange
             string expression = "(:value + 15.123d) > (:product / 2.123d) || (:value % 2.1d == 0i)";
 
             var expectedTokens = new List<Token>
@@ -211,8 +228,10 @@ namespace OchoaLopes.ExprEngine.Tests.Services
                 new Token(TokenTypeEnum.RightParenthesis, ")"),
             };
 
-            var actualTokens = lexer.Tokenize(expression);
+            // Act
+            var actualTokens = _lexer.LexExpression(expression);
 
+            // Assert
             Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
 
             for (int i = 0; i < expectedTokens.Count; i++)
@@ -222,5 +241,114 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             }
         }
 
+        [Test]
+        public void Tokenize_With_LiteralDates_Test()
+        {
+            // Arrange
+            string expression = "(:birthDate == '2000-01-01't && :anniversary == '2010-12-31't)";
+
+            var expectedTokens = new List<Token>
+            {
+                new Token(TokenTypeEnum.LeftParenthesis, "("),
+                new Token(TokenTypeEnum.Variable, "birthDate"),
+                new Token(TokenTypeEnum.Equal, "=="),
+                new Token(TokenTypeEnum.LiteralDateTime, "2000-01-01"),
+                new Token(TokenTypeEnum.And, "&&"),
+                new Token(TokenTypeEnum.Variable, "anniversary"),
+                new Token(TokenTypeEnum.Equal, "=="),
+                new Token(TokenTypeEnum.LiteralDateTime, "2010-12-31"),
+                new Token(TokenTypeEnum.RightParenthesis, ")")
+            };
+
+            // Act
+            var actualTokens = _lexer.LexExpression(expression);
+
+            // Assert
+            Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
+
+            for (int i = 0; i < expectedTokens.Count; i++)
+            {
+                Assert.That(actualTokens[i].Type, Is.EqualTo(expectedTokens[i].Type));
+                Assert.That(actualTokens[i].Value, Is.EqualTo(expectedTokens[i].Value));
+            }
+        }
+
+        [Test]
+        public void Tokenize_With_Mixed_LiteralDates_And_Other_Types_Test()
+        {
+            // Arrange
+            string expression = ":age >= 18i && :birthDate == '2000-01-01't || :anniversary < '2010-12-31't";
+
+            var expectedTokens = new List<Token>
+            {
+                new Token(TokenTypeEnum.Variable, "age"),
+                new Token(TokenTypeEnum.GreaterThanOrEqual, ">="),
+                new Token(TokenTypeEnum.LiteralInteger, "18"),
+                new Token(TokenTypeEnum.And, "&&"),
+                new Token(TokenTypeEnum.Variable, "birthDate"),
+                new Token(TokenTypeEnum.Equal, "=="),
+                new Token(TokenTypeEnum.LiteralDateTime, "2000-01-01"),
+                new Token(TokenTypeEnum.Or, "||"),
+                new Token(TokenTypeEnum.Variable, "anniversary"),
+                new Token(TokenTypeEnum.LessThan, "<"),
+                new Token(TokenTypeEnum.LiteralDateTime, "2010-12-31")
+            };
+
+            // Act
+            var actualTokens = _lexer.LexExpression(expression);
+
+            // Assert
+            Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
+
+            for (int i = 0; i < expectedTokens.Count; i++)
+            {
+                Assert.That(actualTokens[i].Type, Is.EqualTo(expectedTokens[i].Type));
+                Assert.That(actualTokens[i].Value, Is.EqualTo(expectedTokens[i].Value));
+            }
+        }
+
+        [Test]
+        public void Tokenize_With_DatesWithoutFormat_ShouldBe_LiteralString()
+        {
+            // Arrange
+            string expression = ":age >= 18i && :birthDate == '2000-01-01' || :anniversary < '2010-12-31'";
+
+            var expectedTokens = new List<Token>
+            {
+                new Token(TokenTypeEnum.Variable, "age"),
+                new Token(TokenTypeEnum.GreaterThanOrEqual, ">="),
+                new Token(TokenTypeEnum.LiteralInteger, "18"),
+                new Token(TokenTypeEnum.And, "&&"),
+                new Token(TokenTypeEnum.Variable, "birthDate"),
+                new Token(TokenTypeEnum.Equal, "=="),
+                new Token(TokenTypeEnum.LiteralString, "2000-01-01"),
+                new Token(TokenTypeEnum.Or, "||"),
+                new Token(TokenTypeEnum.Variable, "anniversary"),
+                new Token(TokenTypeEnum.LessThan, "<"),
+                new Token(TokenTypeEnum.LiteralString, "2010-12-31")
+            };
+
+            // Act
+            var actualTokens = _lexer.LexExpression(expression);
+
+            // Assert
+            Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
+
+            for (int i = 0; i < expectedTokens.Count; i++)
+            {
+                Assert.That(actualTokens[i].Type, Is.EqualTo(expectedTokens[i].Type));
+                Assert.That(actualTokens[i].Value, Is.EqualTo(expectedTokens[i].Value));
+            }
+        }
+
+        [Test]
+        public void Tokenize_WithInvalidDateExpression_ReturnsParsedExpressionStringLiteralForInvalidDate()
+        {
+            // Arrange
+            var expression = "(:birthDate == '2000-13-01't)";
+
+            // Act & Assert
+            Assert.Throws<InvalidOperationException>(() => _lexer.LexExpression(expression));
+        }
     }
 }

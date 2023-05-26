@@ -15,6 +15,7 @@
         LiteralChar,
         LiteralBoolean,
         LiteralNull,
+        LiteralDateTime,
         Literal,
 
         // Unary operators
