@@ -20,11 +20,7 @@ namespace OchoaLopes.ExprEngine.Services
 
         public IList<string> TokenizeExpression(string expression, CultureInfo? cultureInfo)
         {
-            if (cultureInfo != null)
-            {
-                _cultureInfo = cultureInfo;
-                _regex = RegexBuilder.BuildRegex(cultureInfo);
-            }
+            var localRegex = cultureInfo != null ? RegexBuilder.BuildRegex(cultureInfo) : _regex;
 
             var tokens = new List<string>();
 
@@ -43,7 +39,7 @@ namespace OchoaLopes.ExprEngine.Services
                 }
                 else
                 {
-                    var matches = _regex.Matches(token);
+                    var matches = localRegex.Matches(token);
                     if (matches != null)
                     {
                         tokens.AddRange(matches.Select(m => m.Value).ToList());

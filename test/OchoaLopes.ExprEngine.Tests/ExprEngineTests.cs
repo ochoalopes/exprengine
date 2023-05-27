@@ -534,6 +534,23 @@ namespace OchoaLopes.ExprEngine.Tests
         }
 
         [Test]
+        public void EvaluateExpression_DecimalComparisonWrongCultureInfo_ReturnsTrue()
+        {
+            // Arrange
+            var expression = ":input > 1.5d";
+            var variables = new Dictionary<string, object>
+            {
+                { "input", 1.6 }
+            };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables, new CultureInfo("pt-BR"));
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
         public void EvaluateExpression_DoubleComparisonBrazilianFormat_ReturnsTrue()
         {
             // Arrange
