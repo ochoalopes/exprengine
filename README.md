@@ -12,7 +12,7 @@ The ExprEngine library can be installed via NuGet. Use the package manager conso
 Install-Package OchoaLopes.ExprEngine
 ```
 
-### Values Formats
+### Value Formats
 ExprEngine supports a few formats as input parameters in expressions:
 
 - Integer: Represented by appending an 'i' to the number. Example: "10i"
@@ -20,6 +20,8 @@ ExprEngine supports a few formats as input parameters in expressions:
 - Double: Represented by appending an 'D' to the number. Example: "6.02D"
 - Decimal: Represented by appending a 'd' to the number. Example: "100.0d"
 - Dates: Represented by appending a 't' to the string. Example: " '2001-01-01't "
+- String: Represented by single quotes. Example: " 'this is a string value' "
+- Variable: Represented by colon. Example: " :variable "
 
 ## Dates
 
@@ -34,9 +36,10 @@ string expression = ":firstVariable * 10i <= :secondVariable";
 
 #### Comparison
 
-ExprEngine supports comparison of dates with operators like `==`, `!=`, `>`, `<`, `>=`, `<=`. For example, `:birthDate > :otherDate`.
+ExprEngine supports comparisons with operators like `==`, `!=`, `>`, `<`, `>=`, `<=`. For example, `:birthDate > :otherDate`.
 
-Please note that the date format and operations depend on the `CultureInfo` passed to the `ExpressionService` constructor.
+Please note that the date format and operations depend on the `CultureInfo` passed to the `ExpressionService` constructor or by the methods.
+You can also use both, you can pass by constructor and then you are going to set the default CultureInfo, but if you want to use for a specific method a different one you can pass another CultureInfo. If you don't pass any CultureInfo the default is CultureInfo.CurrentInfo.
 
 This will influence the following:
 
@@ -58,6 +61,10 @@ using OchoaLopes.ExprEngine;
 
 ```csharp
 var expressionService = new ExpressionService();
+```
+
+```csharp
+var expressionService = new ExpressionService(new CultureInfo("en-US"));
 ```
 
 3. Validate an expression:
@@ -91,7 +98,7 @@ var variables = new Dictionary<string, object>
     { "y", 2.5 }
 };
 
-object result = expressionService.ComputeExpression(expression, variables);
+object result = expressionService.ComputeExpression(expression, variables, CultureInfo.InvariantCulture);
 ```
 
 ### Additional Methods

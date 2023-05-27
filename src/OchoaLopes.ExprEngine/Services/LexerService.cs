@@ -20,18 +20,15 @@ namespace OchoaLopes.ExprEngine.Services
 
         public List<Token> LexExpression(string expression, CultureInfo? cultureInfo = null)
         {
-            if (cultureInfo != null)
-            {
-                _cultureInfo = cultureInfo;
-            }
+            var localCultureInfo = cultureInfo ?? _cultureInfo;
 
             var tokens = new List<Token>();
 
-            var tokenizedExpression = _tokenizerService.TokenizeExpression(expression, _cultureInfo);
+            var tokenizedExpression = _tokenizerService.TokenizeExpression(expression, localCultureInfo);
 
             foreach(var token in tokenizedExpression)
             {
-                var type = LexerHelper.GetTokenType(token, _cultureInfo);
+                var type = LexerHelper.GetTokenType(token, localCultureInfo);
 
                 if (type == TokenTypeEnum.Subtract)
                 {
