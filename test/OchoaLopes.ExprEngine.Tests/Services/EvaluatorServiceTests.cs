@@ -1,6 +1,7 @@
 ﻿using OchoaLopes.ExprEngine.Exceptions;
 using OchoaLopes.ExprEngine.Expressions;
 using OchoaLopes.ExprEngine.Interfaces;
+using OchoaLopes.ExprEngine.Literals;
 using OchoaLopes.ExprEngine.Services;
 
 namespace OchoaLopes.ExprEngine.Tests.Services
@@ -13,7 +14,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
         {
             // Arrange
             var evaluatorService = new EvaluatorService();
-            var expression = new Add(new Literal(2), new Literal(3));
+            var expression = new Add(new LiteralInteger(2), new LiteralInteger(3));
             var expected = 5;
 
             // Act

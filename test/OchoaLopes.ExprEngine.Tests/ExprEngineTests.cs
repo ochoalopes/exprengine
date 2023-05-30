@@ -697,5 +697,170 @@ namespace OchoaLopes.ExprEngine.Tests
             // Assert
             Assert.IsTrue(result);
         }
+
+        [Test]
+        public void ComputeExpression_ConcatenateString_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = "'test' + 'ing'";
+
+            // Act
+            var result = _expressionService.ComputeExpression(expression);
+
+            // Assert
+            Assert.That(result, Is.EqualTo("testing"));
+        }
+
+        [Test]
+        public void ComputeExpressionWithVariables_ConcatenateString_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = ":x + :y";
+            var variables = new Dictionary<string, object> {
+                { "x", "test"},
+                { "y", "ing"}
+            };
+
+            // Act
+            var result = _expressionService.ComputeExpression(expression, variables);
+
+            // Assert
+            Assert.That(result, Is.EqualTo("testing"));
+        }
+
+        [Test]
+        public void ComputeExpression_SubtractString_ShouldThrowAnException()
+        {
+            // Arrange
+            var expression = "'test' - 'es'";
+
+            // Act && Assert
+            Assert.Throws<InvalidOperationException>(() => _expressionService.ComputeExpression(expression));
+        }
+
+        [Test]
+        public void EvaluateExpression_OperateStartWithStringEqualsOperation_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = "'testing' == %'test'";
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void EvaluateExpression_OperateStartWithStringLikeOperation_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = "'testing' like %'test'";
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpression_OperateEndsWithStringLikeOperation_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = "'testing' like 'ing'%";
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpression_OperateContainsStringLikeOperation_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = "'testing' like %'sti'%";
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpression_OperateStartWithStringNotLikeOperation_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = "'testing' not like %'test'";
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void EvaluateExpression_OperateEndsWithStringNotLikeOperation_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = "'testing' not like 'ing'%";
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void EvaluateExpression_OperateContainsStringNotLikeOperation_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = "'testing' not like %'sti'%";
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void EvaluateExpression_OperateContainsStringLikeOperationWithVariables_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = ":x like %'Leo' and :y like 'ing'";
+            var variables = new Dictionary<string, object> {
+                { "x", "Leonardo"},
+                { "y", "ing"}
+            };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void EvaluateExpression_OperateContainsStringNotLikeOperationWithVariables_ReturnsExpectedValue()
+        {
+            // Arrange
+            var expression = ":x like %'Leonardo'% and :y not like 'testing'%";
+            var variables = new Dictionary<string, object> {
+                { "x", "nar"},
+                { "y", "ing"}
+            };
+
+            // Act
+            var result = _expressionService.EvaluateExpression(expression, variables);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
     }
 }

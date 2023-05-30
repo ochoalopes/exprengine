@@ -12,6 +12,9 @@
         LiteralDouble,
         LiteralFloat,
         LiteralString,
+        LiteralStringStartsWith,
+        LiteralStringEndsWith,
+        LiteralStringContains,
         LiteralChar,
         LiteralBoolean,
         LiteralNull,
@@ -36,7 +39,9 @@
         GreaterThan,
         LessThan,
         GreaterThanOrEqual,
-        LessThanOrEqual
+        LessThanOrEqual,
+        Like,
+        NotLike
     }
 
 }

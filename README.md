@@ -23,9 +23,19 @@ ExprEngine supports a few formats as input parameters in expressions:
 - String: Represented by single quotes. Example: " 'this is a string value' "
 - Variable: Represented by colon. Example: " :variable "
 
-## Dates
+### Dates
 
 ExprEngine provides support for date operations, making it flexible and adaptable to a variety of scenarios. It allows for adding or subtracting days from a date and comparing dates.
+
+```csharp
+string expression = ":birthdate + 1 <= '05/01/2001't";
+```
+
+#### Accepted Date Formats
+
+```csharp
+string[] formats = { "yyyy-MM-dd", "dd/MM/yyyy", "MM/dd/yyyy", "yyyy/MM/dd" };
+```
 
 ### Variable
 To use variable you have to add a placeholder in your expression, then you can use a dictionary or an ordered list of values, this is available for ValidateExpression, EvaluateExpression and ComputeExpression.
@@ -34,9 +44,20 @@ To use variable you have to add a placeholder in your expression, then you can u
 string expression = ":firstVariable * 10i <= :secondVariable";
 ```
 
-#### Comparison
+### Strings
+You can performe some validations or comparions with strings using key-word "like" or "not like".
 
-ExprEngine supports comparisons with operators like `==`, `!=`, `>`, `<`, `>=`, `<=`. For example, `:birthDate > :otherDate`.
+- StartsWith: Adding a '%' at the begging of a string. Example: "'starts with string' like %'starts'";
+- EndsWith: Adding a '%' at the end of a string. Example: "'ends with string' like 'string'%";
+- Contains: Adding a '%' at the begging and the end of a string. Example: "'contains value in string' like %'value'%";
+
+```csharp
+string expression = ":firstVariable * 10i <= :secondVariable";
+```
+
+### Comparison
+
+ExprEngine supports comparisons with operators like `!`, `==`, `!=`, `>`, `<`, `>=`, `<=`, `and`, `or`, `is`, `is not`, `like`, `not like`. For example, `:birthDate > :otherDate`.
 
 Please note that the date format and operations depend on the `CultureInfo` passed to the `ExpressionService` constructor or by the methods.
 You can also use both, you can pass by constructor and then you are going to set the default CultureInfo, but if you want to use for a specific method a different one you can pass another CultureInfo. If you don't pass any CultureInfo the default is CultureInfo.CurrentInfo.
@@ -127,7 +148,7 @@ In addition to the basic expression evaluation functionality, the ExprEngine lib
 
 While ExprEngine provides a range of expression evaluation capabilities, it does have some limitations:
 
-- The library supports a subset of mathematical and logical operations, including addition, subtraction, multiplication, division, comparison, logical AND, and logical OR.
+- The library supports a subset of mathematical and logical operations, including addition, subtraction, multiplication, division, comparison and logical operation.
 
 - The library only supports variables as input parameters. It does not provide facilities for defining custom functions or complex expressions.
 

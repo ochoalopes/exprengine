@@ -350,5 +350,139 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             // Act & Assert
             Assert.Throws<InvalidOperationException>(() => _lexer.LexExpression(expression));
         }
+
+        [Test]
+        public void Tokenize_IsNull_Expression()
+        {
+            // Arrange
+            var expectedTokens = new List<Token>
+            {
+                new Token(TokenTypeEnum.Variable, "x"),
+                new Token(TokenTypeEnum.Equal, "is"),
+                new Token(TokenTypeEnum.LiteralNull, "null")
+            };
+
+            // Act
+            var actualTokens = _lexer.LexExpression(":x is null");
+
+            // Assert
+            Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
+
+            for (int i = 0; i < expectedTokens.Count; i++)
+            {
+                Assert.That(actualTokens[i].Type, Is.EqualTo(expectedTokens[i].Type));
+                Assert.That(actualTokens[i].Value, Is.EqualTo(expectedTokens[i].Value));
+            }
+        }
+
+        [Test]
+        public void Tokenize_IsNotNull_Expression()
+        {
+            // Arrange
+            var expectedTokens = new List<Token>
+            {
+                new Token(TokenTypeEnum.Variable, "x"),
+                new Token(TokenTypeEnum.NotEqual, "is not"),
+                new Token(TokenTypeEnum.LiteralNull, "null")
+            };
+
+            // Act
+            var actualTokens = _lexer.LexExpression(":x is not null");
+
+            // Assert
+            Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
+
+            for (int i = 0; i < expectedTokens.Count; i++)
+            {
+                Assert.That(actualTokens[i].Type, Is.EqualTo(expectedTokens[i].Type));
+                Assert.That(actualTokens[i].Value, Is.EqualTo(expectedTokens[i].Value));
+            }
+        }
+
+        [Test]
+        public void Tokenize_AndOrExpressions_ShouldReturnTokenizedString()
+        {
+            // Arrange
+            var expectedTokens = new List<Token>
+            {
+                new Token(TokenTypeEnum.LeftParenthesis, "("),
+                new Token(TokenTypeEnum.Variable, "x"),
+                new Token(TokenTypeEnum.GreaterThan, ">"),
+                new Token(TokenTypeEnum.LiteralInteger, "10"),
+                new Token(TokenTypeEnum.RightParenthesis, ")"),
+                new Token(TokenTypeEnum.And, "and"),
+                new Token(TokenTypeEnum.LeftParenthesis, "("),
+                new Token(TokenTypeEnum.Variable, "x"),
+                new Token(TokenTypeEnum.LessThan, "<"),
+                new Token(TokenTypeEnum.LiteralInteger, "20"),
+                new Token(TokenTypeEnum.RightParenthesis, ")"),
+                new Token(TokenTypeEnum.Or, "or"),
+                new Token(TokenTypeEnum.LeftParenthesis, "("),
+                new Token(TokenTypeEnum.Variable, "x"),
+                new Token(TokenTypeEnum.Equal, "=="),
+                new Token(TokenTypeEnum.LiteralInteger, "5"),
+                new Token(TokenTypeEnum.RightParenthesis, ")"),
+            };
+
+            // Act
+            var actualTokens = _lexer.LexExpression("(:x > 10i) and (:x < 20i) or (:x == 5i)");
+
+            // Assert
+            Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
+
+            for (int i = 0; i < expectedTokens.Count; i++)
+            {
+                Assert.That(actualTokens[i].Type, Is.EqualTo(expectedTokens[i].Type));
+                Assert.That(actualTokens[i].Value, Is.EqualTo(expectedTokens[i].Value));
+            }
+        }
+
+        [Test]
+        public void Tokenize_Like_Expression()
+        {
+            // Arrange
+            var expectedTokens = new List<Token>
+            {
+                new Token(TokenTypeEnum.Variable, "x"),
+                new Token(TokenTypeEnum.Like, "like"),
+                new Token(TokenTypeEnum.LiteralStringStartsWith, "testing")
+            };
+
+            // Act
+            var actualTokens = _lexer.LexExpression(":x like %'testing'");
+
+            // Assert
+            Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
+
+            for (int i = 0; i < expectedTokens.Count; i++)
+            {
+                Assert.That(actualTokens[i].Type, Is.EqualTo(expectedTokens[i].Type));
+                Assert.That(actualTokens[i].Value, Is.EqualTo(expectedTokens[i].Value));
+            }
+        }
+
+        [Test]
+        public void Tokenize_NotLike_Expression()
+        {
+            // Arrange
+            var expectedTokens = new List<Token>
+            {
+                new Token(TokenTypeEnum.Variable, "x"),
+                new Token(TokenTypeEnum.NotLike, "not like"),
+                new Token(TokenTypeEnum.LiteralStringContains, "testing")
+            };
+
+            // Act
+            var actualTokens = _lexer.LexExpression(":x not like %'testing'%");
+
+            // Assert
+            Assert.That(actualTokens.Count, Is.EqualTo(expectedTokens.Count));
+
+            for (int i = 0; i < expectedTokens.Count; i++)
+            {
+                Assert.That(actualTokens[i].Type, Is.EqualTo(expectedTokens[i].Type));
+                Assert.That(actualTokens[i].Value, Is.EqualTo(expectedTokens[i].Value));
+            }
+        }
     }
 }

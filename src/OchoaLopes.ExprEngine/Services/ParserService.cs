@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using OchoaLopes.ExprEngine.Builders;
 using OchoaLopes.ExprEngine.Enums;
 using OchoaLopes.ExprEngine.Expressions;
 using OchoaLopes.ExprEngine.Interfaces;
@@ -25,6 +26,7 @@ namespace OchoaLopes.ExprEngine.Services
             return ParseExpression(cultureInfo ?? _cultureInfo);
         }
 
+        #region Private Methods
         private IExpression ParseExpression(CultureInfo cultureInfo)
         {
             return ParseOrExpression(cultureInfo);
@@ -38,7 +40,7 @@ namespace OchoaLopes.ExprEngine.Services
             {
                 var op = ConsumeToken();
                 var right = ParseAndExpression(cultureInfo);
-                left = new Or(left, right);
+                left = ExpressionBuilder.BuildExpression(op.Type, left, right);
             }
 
             return left;
@@ -52,7 +54,7 @@ namespace OchoaLopes.ExprEngine.Services
             {
                 var op = ConsumeToken();
                 var right = ParseEqualityExpression(cultureInfo);
-                left = new And(left, right);
+                left = ExpressionBuilder.BuildExpression(op.Type, left, right);
             }
 
             return left;
@@ -66,11 +68,7 @@ namespace OchoaLopes.ExprEngine.Services
             {
                 var op = ConsumeToken();
                 var right = ParseRelationalExpression(cultureInfo);
-
-                if (op.Type == TokenTypeEnum.Equal)
-                    left = new Equal(left, right);
-                else
-                    left = new NotEqual(left, right);
+                left = ExpressionBuilder.BuildExpression(op.Type, left, right);
             }
 
             return left;
@@ -84,22 +82,7 @@ namespace OchoaLopes.ExprEngine.Services
             {
                 var op = ConsumeToken();
                 var right = ParseAdditiveExpression(cultureInfo);
-
-                switch (op.Type)
-                {
-                    case TokenTypeEnum.GreaterThan:
-                        left = new GreaterThan(left, right);
-                        break;
-                    case TokenTypeEnum.GreaterThanOrEqual:
-                        left = new GreaterThanOrEqual(left, right);
-                        break;
-                    case TokenTypeEnum.LessThan:
-                        left = new LessThan(left, right);
-                        break;
-                    case TokenTypeEnum.LessThanOrEqual:
-                        left = new LessThanOrEqual(left, right);
-                        break;
-                }
+                left = ExpressionBuilder.BuildExpression(op.Type, left, right);
             }
 
             return left;
@@ -113,15 +96,7 @@ namespace OchoaLopes.ExprEngine.Services
             {
                 var op = ConsumeToken();
                 var right = ParseMultiplicativeExpression(cultureInfo);
-
-                if (op.Type == TokenTypeEnum.Add)
-                {
-                    left = new Add(left, right);
-                }
-                else if (op.Type == TokenTypeEnum.BinaryMinus)
-                {
-                    left = new Subtract(left, right);
-                }
+                left = ExpressionBuilder.BuildExpression(op.Type, left, right);
             }
 
             return left;
@@ -129,25 +104,27 @@ namespace OchoaLopes.ExprEngine.Services
 
         private IExpression ParseMultiplicativeExpression(CultureInfo cultureInfo)
         {
-            var left = ParsePrimaryExpression(cultureInfo);
+            var left = ParseStringEqualityExpression(cultureInfo);
 
             while (MatchToken(TokenTypeEnum.Multiply, TokenTypeEnum.Divide, TokenTypeEnum.Modulo))
             {
                 var op = ConsumeToken();
-                var right = ParsePrimaryExpression(cultureInfo);
+                var right = ParseStringEqualityExpression(cultureInfo);
+                left = ExpressionBuilder.BuildExpression(op.Type, left, right);
+            }
 
-                switch (op.Type)
-                {
-                    case TokenTypeEnum.Multiply:
-                        left = new Multiply(left, right);
-                        break;
-                    case TokenTypeEnum.Divide:
-                        left = new Divide(left, right);
-                        break;
-                    case TokenTypeEnum.Modulo:
-                        left = new Modulo(left, right);
-                        break;
-                }
+            return left;
+        }
+
+        private IExpression ParseStringEqualityExpression(CultureInfo cultureInfo)
+        {
+            var left = ParsePrimaryExpression(cultureInfo);
+
+            while (MatchToken(TokenTypeEnum.Like))
+            {
+                var op = ConsumeToken();
+                var right = ParsePrimaryExpression(cultureInfo);
+                left = ExpressionBuilder.BuildExpression(op.Type, left, right);
             }
 
             return left;
@@ -155,9 +132,11 @@ namespace OchoaLopes.ExprEngine.Services
 
         private IExpression ParsePrimaryExpression(CultureInfo cultureInfo)
         {
+
             if (MatchToken(TokenTypeEnum.LeftParenthesis))
             {
                 ConsumeToken(); // Consume the '(' token
+
                 var expression = ParseExpression(cultureInfo);
 
                 if (!MatchToken(TokenTypeEnum.RightParenthesis))
@@ -169,64 +148,26 @@ namespace OchoaLopes.ExprEngine.Services
 
                 return expression;
             }
-            else if (MatchToken(
-                TokenTypeEnum.LiteralInteger,
-                TokenTypeEnum.LiteralDouble,
-                TokenTypeEnum.LiteralDecimal,
-                TokenTypeEnum.LiteralFloat,
-                TokenTypeEnum.LiteralString,
-                TokenTypeEnum.LiteralChar,
-                TokenTypeEnum.LiteralBoolean,
-                TokenTypeEnum.LiteralNull,
-                TokenTypeEnum.LiteralDateTime,
-                TokenTypeEnum.Variable))
+
+            if (MatchToken(TokenTypeEnum.LiteralInteger, TokenTypeEnum.LiteralDouble, TokenTypeEnum.LiteralDecimal,
+                TokenTypeEnum.LiteralFloat, TokenTypeEnum.LiteralString, TokenTypeEnum.LiteralStringStartsWith,
+                TokenTypeEnum.LiteralStringEndsWith, TokenTypeEnum.LiteralStringContains, TokenTypeEnum.LiteralChar,
+                TokenTypeEnum.LiteralBoolean, TokenTypeEnum.LiteralNull, TokenTypeEnum.LiteralDateTime, TokenTypeEnum.Variable))
             {
                 var token = ConsumeToken();
 
-                if (token.Value == null)
-                {
-                    throw new InvalidOperationException("Token value is invalid");
-                }
-
-                switch (token.Type)
-                {
-                    case TokenTypeEnum.LiteralInteger:
-                        return new Literal(int.Parse(token.Value, cultureInfo));
-                    case TokenTypeEnum.LiteralDouble:
-                        return new Literal(double.Parse(token.Value, NumberStyles.Any, cultureInfo));
-                    case TokenTypeEnum.LiteralDecimal:
-                        return new Literal(decimal.Parse(token.Value, NumberStyles.Any, cultureInfo));
-                    case TokenTypeEnum.LiteralFloat:
-                        return new Literal(float.Parse(token.Value, NumberStyles.Any, cultureInfo));
-                    case TokenTypeEnum.LiteralString:
-                        return new Literal(token.Value.ToString());
-                    case TokenTypeEnum.LiteralChar:
-                        return new Literal(char.Parse(token.Value));
-                    case TokenTypeEnum.LiteralBoolean:
-                        return new Literal(bool.Parse(token.Value));
-                    case TokenTypeEnum.LiteralNull:
-                        return new Literal(null);
-                    case TokenTypeEnum.LiteralDateTime:
-                        return new Literal(DateTime.Parse(token.Value, cultureInfo));
-                    case TokenTypeEnum.Variable:
-                        return new Variable(token.Value);
-                    default:
-                        throw new InvalidOperationException("Unexpected token.");
-                }
+                return ExpressionBuilder.BuildLiteral(token.Type, token.Value ?? string.Empty, cultureInfo);
             }
-            else if (MatchToken(TokenTypeEnum.UnaryMinus))
+
+            if (MatchToken(TokenTypeEnum.UnaryMinus))
             {
                 ConsumeToken(); // Consume the '-' token
                 var expression = ParsePrimaryExpression(cultureInfo);
                 return new UnaryMinus(expression);
             }
-            else
-            {
-                throw new InvalidOperationException("Unexpected token.");
-            }
+
+            throw new InvalidOperationException("Unexpected token.");
         }
-
-
 
         private bool MatchToken(params TokenTypeEnum[] types)
         {
@@ -236,9 +177,12 @@ namespace OchoaLopes.ExprEngine.Services
             }
 
             if (_currentIndex >= _tokens.Count)
+            {
                 return false;
+            }
 
             var currentToken = _tokens[_currentIndex];
+
             return Array.Exists(types, t => t == currentToken.Type);
         }
 
@@ -250,9 +194,12 @@ namespace OchoaLopes.ExprEngine.Services
             }
 
             if (_currentIndex >= _tokens.Count)
+            {
                 throw new InvalidOperationException("No more tokens to consume.");
-
+            }
+                
             return _tokens[_currentIndex++];
         }
+        #endregion
     }
 }

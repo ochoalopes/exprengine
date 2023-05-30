@@ -1,4 +1,5 @@
 ﻿using OchoaLopes.ExprEngine.Expressions;
+using OchoaLopes.ExprEngine.Literals;
 
 namespace OchoaLopes.ExprEngine.Tests.Expressions
 {
@@ -16,33 +17,33 @@ namespace OchoaLopes.ExprEngine.Tests.Expressions
         [Test]
         public void LessThanOrEqualTest_Doubles()
         {
-            var expr = new LessThanOrEqual(new Literal(2.0), new Literal(3.0));
+            var expr = new LessThanOrEqual(new LiteralDouble(2.0), new LiteralDouble(3.0));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(true));
 
-            expr = new LessThanOrEqual(new Literal(5.0), new Literal(3.0));
+            expr = new LessThanOrEqual(new LiteralDouble(5.0), new LiteralDouble(3.0));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(false));
 
-            expr = new LessThanOrEqual(new Literal(3.0), new Literal(3.0));
+            expr = new LessThanOrEqual(new LiteralDouble(3.0), new LiteralDouble(3.0));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(true));
         }
 
         [Test]
         public void LessThanOrEqualTest_Strings()
         {
-            var expr = new LessThanOrEqual(new Literal("a"), new Literal("b"));
+            var expr = new LessThanOrEqual(new LiteralChar('a'), new LiteralChar('b'));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(true));
 
-            expr = new LessThanOrEqual(new Literal("b"), new Literal("a"));
+            expr = new LessThanOrEqual(new LiteralChar('b'), new LiteralChar('a'));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(false));
 
-            expr = new LessThanOrEqual(new Literal("a"), new Literal("a"));
+            expr = new LessThanOrEqual(new LiteralChar('a'), new LiteralChar('a'));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(true));
         }
 
         [Test]
         public void LessThanOrEqualTest_InvalidTypes()
         {
-            var expr = new LessThanOrEqual(new Literal(true), new Literal(false));
+            var expr = new LessThanOrEqual(new LiteralBool(true), new LiteralBool(false));
 
             Assert.Throws<InvalidOperationException>(() => expr.Evaluate(variables));
         }

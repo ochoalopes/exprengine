@@ -1,4 +1,5 @@
 ﻿using OchoaLopes.ExprEngine.Expressions;
+using OchoaLopes.ExprEngine.Literals;
 
 namespace OchoaLopes.ExprEngine.Tests.Expressions
 {
@@ -16,33 +17,33 @@ namespace OchoaLopes.ExprEngine.Tests.Expressions
         [Test]
         public void GreaterThanOrEqualTest_Doubles()
         {
-            var expr = new GreaterThanOrEqual(new Literal(5.0), new Literal(3.0));
+            var expr = new GreaterThanOrEqual(new LiteralDouble(5.0), new LiteralDouble(3.0));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(true));
 
-            expr = new GreaterThanOrEqual(new Literal(2.0), new Literal(3.0));
+            expr = new GreaterThanOrEqual(new LiteralDouble(2.0), new LiteralDouble(3.0));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(false));
 
-            expr = new GreaterThanOrEqual(new Literal(3.0), new Literal(3.0));
+            expr = new GreaterThanOrEqual(new LiteralDouble(3.0), new LiteralDouble(3.0));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(true));
         }
 
         [Test]
         public void GreaterThanOrEqualTest_Strings()
         {
-            var expr = new GreaterThanOrEqual(new Literal("b"), new Literal("a"));
+            var expr = new GreaterThanOrEqual(new LiteralChar('b'), new LiteralChar('a'));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(true));
 
-            expr = new GreaterThanOrEqual(new Literal("a"), new Literal("b"));
+            expr = new GreaterThanOrEqual(new LiteralChar('a'), new LiteralChar('b'));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(false));
 
-            expr = new GreaterThanOrEqual(new Literal("a"), new Literal("a"));
+            expr = new GreaterThanOrEqual(new LiteralChar('a'), new LiteralChar('a'));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(true));
         }
 
         [Test]
         public void GreaterThanOrEqualTest_InvalidTypes()
         {
-            var expr = new GreaterThanOrEqual(new Literal(true), new Literal(false));
+            var expr = new GreaterThanOrEqual(new LiteralBool(true), new LiteralBool(false));
 
             Assert.Throws<InvalidOperationException>(() => expr.Evaluate(variables));
         }

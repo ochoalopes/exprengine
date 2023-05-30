@@ -9,7 +9,7 @@ namespace OchoaLopes.ExprEngine.Builders
         {
             var decimalSeparator = Regex.Escape(cultureInfo.NumberFormat.NumberDecimalSeparator);
             var regex = new Regex(
-                @"(:\w+|==|!=|>=|<=|<|>|&&|\|\||!|\+|-|\*|/|%|'[^']*'|true|false|\d+" + decimalSeparator + @"?\d*[idfD]?|\d*" + decimalSeparator + @"\d+[idfD]?|null|is\s+not\s+null|is\s+null|\(|\))",
+                @"(:\w+|==|!=|>=|<=|<|>|&&|and|\|\||or|!|\+|-|\*|/|%|'[^']*'|true|false|\d+" + decimalSeparator + @"?\d*[idfD]?|\d*" + decimalSeparator + @"\d+[idfD]?|null|is\s+not|null|is|like|not\s+like|%?'[^']*'%?|\(|\))",
             RegexOptions.IgnoreCase);
 
             return regex;

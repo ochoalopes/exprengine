@@ -63,6 +63,16 @@ namespace OchoaLopes.ExprEngine.Helpers
                     return TokenTypeEnum.LiteralNull;
                 case var _ when TokenValidator.IsLiteralDate(token, cultureInfo):
                     return TokenTypeEnum.LiteralDateTime;
+                case var _ when TokenValidator.IsLiteralStringStartsWith(token):
+                    return TokenTypeEnum.LiteralStringStartsWith;
+                case var _ when TokenValidator.IsLiteralStringEndsWith(token):
+                    return TokenTypeEnum.LiteralStringEndsWith;
+                case var _ when TokenValidator.IsLiteralStringContains(token):
+                    return TokenTypeEnum.LiteralStringContains;
+                case var _ when TokenValidator.IsLike(token):
+                    return TokenTypeEnum.Like;
+                case var _ when TokenValidator.IsNotLike(token):
+                    return TokenTypeEnum.NotLike;
                 default:
                     throw new InvalidOperationException($"Unknown token type: {token}");
             }
@@ -70,6 +80,7 @@ namespace OchoaLopes.ExprEngine.Helpers
 
         public static string CleanUpTokenValue(TokenTypeEnum type, string token)
         {
+            token = RemoveStringOperation(type, token);
             token = RemoveSingleQuotes(type, token);
             token = RemovePrefix(type, token);
             token = RemoveSuffix(type, token);
@@ -111,7 +122,10 @@ namespace OchoaLopes.ExprEngine.Helpers
         {
             var types = new TokenTypeEnum[] {
                 TokenTypeEnum.LiteralString,
-                TokenTypeEnum.LiteralDateTime
+                TokenTypeEnum.LiteralDateTime,
+                TokenTypeEnum.LiteralStringStartsWith,
+                TokenTypeEnum.LiteralStringEndsWith,
+                TokenTypeEnum.LiteralStringContains
             };
 
             if (types.Contains(type))
@@ -130,6 +144,22 @@ namespace OchoaLopes.ExprEngine.Helpers
             }
 
             return token;
+        }
+
+        private static string RemoveStringOperation(TokenTypeEnum type, string token)
+        {
+            var types = new TokenTypeEnum[] {
+                TokenTypeEnum.LiteralStringStartsWith,
+                TokenTypeEnum.LiteralStringEndsWith,
+                TokenTypeEnum.LiteralStringContains
+            };
+
+            if (types.Contains(type))
+            {
+                return token.TrimStart('%').TrimEnd('%').Trim();
+            }
+
+            return token.Trim();
         }
         #endregion
     }
