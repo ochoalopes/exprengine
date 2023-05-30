@@ -12,6 +12,11 @@ namespace OchoaLopes.ExprEngine.Validators
             return token.StartsWith("'") && token.EndsWith("'t");
         }
 
+        public static bool IsStringOperation(string token)
+        {
+            return token.Trim().StartsWith("%") || token.Trim().EndsWith("%"); 
+        }
+
         public static bool IsVariable(string token)
         {
             return token.Trim().StartsWith(":");
@@ -29,12 +34,22 @@ namespace OchoaLopes.ExprEngine.Validators
 
         public static bool IsEqual(string token)
         {
-            return token.Trim() == "==";
+            return token.Trim() == "==" || token.Trim() == "is";
+        }
+
+        public static bool IsLike(string token)
+        {
+            return token.Trim() == "like";
+        }
+
+        public static bool IsNotLike(string token)
+        {
+            return token.Trim() == "not like";
         }
 
         public static bool IsNotEqual(string token)
         {
-            return token.Trim() == "!=";
+            return token.Trim() == "!=" || token.Trim() == "is not";
         }
 
         public static bool IsGreaterThan(string token)
@@ -59,12 +74,12 @@ namespace OchoaLopes.ExprEngine.Validators
 
         public static bool IsAnd(string token)
         {
-            return token.Trim() == "&&";
+            return token.Trim() == "&&" || token.Trim() == "and";
         }
 
         public static bool IsOr(string token)
         {
-            return token.Trim() == "||";
+            return token.Trim() == "||" || token.Trim() == "or";
         }
 
         public static bool IsNot(string token)
@@ -233,6 +248,21 @@ namespace OchoaLopes.ExprEngine.Validators
             }
 
             return false;
+        }
+
+        internal static bool IsLiteralStringStartsWith(string token)
+        {
+            return token.Trim().StartsWith("%") && token.Trim().EndsWith("'");
+        }
+
+        internal static bool IsLiteralStringEndsWith(string token)
+        {
+            return token.Trim().StartsWith("'") && token.Trim().EndsWith("%");
+        }
+
+        internal static bool IsLiteralStringContains(string token)
+        {
+            return token.Trim().StartsWith("%") && token.Trim().EndsWith("%");
         }
     }
 }

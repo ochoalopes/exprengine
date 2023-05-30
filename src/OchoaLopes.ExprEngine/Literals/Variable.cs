@@ -1,6 +1,6 @@
 ﻿using OchoaLopes.ExprEngine.Interfaces;
 
-namespace OchoaLopes.ExprEngine.Expressions
+namespace OchoaLopes.ExprEngine.Literals
 {
     internal class Variable : IExpression
     {

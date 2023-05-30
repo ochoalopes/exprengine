@@ -1,6 +1,6 @@
 ﻿using OchoaLopes.ExprEngine.Exceptions;
-using OchoaLopes.ExprEngine.Expressions;
 using OchoaLopes.ExprEngine.Interfaces;
+using OchoaLopes.ExprEngine.Literals;
 using OchoaLopes.ExprEngine.Operations;
 
 namespace OchoaLopes.ExprEngine.Services
@@ -12,29 +12,31 @@ namespace OchoaLopes.ExprEngine.Services
             return EvaluateNode(expression, variables);
         }
 
+        #region Private Methods
         private object EvaluateNode(IExpression node, IDictionary<string, object> variables)
         {
             if (node is BinaryOperation binaryOperation)
             {
                 return binaryOperation.Evaluate(variables);
             }
-            else if (node is Literal literalExpression)
+
+            if (node is Literal literalExpression)
             {
                 return literalExpression.Value;
             }
-            else if (node is Variable variableExpression)
+
+            if (node is Variable variableExpression)
             {
                 if (variables.ContainsKey(variableExpression.Name))
                 {
                     return variables[variableExpression.Name];
                 }
-                else
-                {
-                    throw new KeyNotFoundException($"Variable '{variableExpression.Name}' not found.");
-                }
+
+                throw new KeyNotFoundException($"Variable '{variableExpression.Name}' not found.");
             }
 
             throw new ExpressionEvaluationException("Invalid expression node type.");
         }
+        #endregion
     }
 }

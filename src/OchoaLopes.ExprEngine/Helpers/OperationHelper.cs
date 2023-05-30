@@ -1,5 +1,7 @@
 ﻿using System.Runtime.Intrinsics.X86;
 using OchoaLopes.ExprEngine.Delegates;
+using OchoaLopes.ExprEngine.Enums;
+using OchoaLopes.ExprEngine.Literals;
 
 namespace OchoaLopes.ExprEngine.Helpers
 {
@@ -105,6 +107,34 @@ namespace OchoaLopes.ExprEngine.Helpers
             }
 
             throw new InvalidOperationException("Both operands of a comparison operation must be IComparable.");
+        }
+
+        public static bool OperateLikeString(TokenTypeEnum? type, string left, string right)
+        {
+            switch (type)
+            {
+                case TokenTypeEnum.LiteralStringStartsWith:
+                    return left.StartsWith(right);
+                case TokenTypeEnum.LiteralStringEndsWith:
+                    return left.EndsWith(right);
+                case TokenTypeEnum.LiteralStringContains:
+                    return left.Contains(right);
+                default: return left.Equals(right);
+            }
+        }
+
+        public static bool OperateNotLikeString(TokenTypeEnum? type, string left, string right)
+        {
+            switch (type)
+            {
+                case TokenTypeEnum.LiteralStringStartsWith:
+                    return !left.StartsWith(right);
+                case TokenTypeEnum.LiteralStringEndsWith:
+                    return !left.EndsWith(right);
+                case TokenTypeEnum.LiteralStringContains:
+                    return !left.Contains(right);
+                default: return !left.Equals(right);
+            }
         }
     }
 }

@@ -7,7 +7,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IsPackable>true</IsPackable>
     <PackageId>OchoaLopes.ExprEngine</PackageId>
-    <Version>1.2.4</Version>
+    <Version>1.2.5</Version>
     <Authors>leovene</Authors>
     <Company>OchoaLopes</Company>
     <PackageIcon>icon.png</PackageIcon>
@@ -27,6 +27,7 @@
     <None Remove="Exceptions\" />
     <None Remove="Delegates\" />
     <None Remove="Builders\" />
+    <None Remove="Literals\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Interfaces\" />
@@ -40,6 +41,7 @@
     <Folder Include="Exceptions\" />
     <Folder Include="Delegates\" />
     <Folder Include="Builders\" />
+    <Folder Include="Literals\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="../../.editorconfig" />

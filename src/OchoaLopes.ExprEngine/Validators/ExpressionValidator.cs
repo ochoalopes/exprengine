@@ -104,6 +104,29 @@ namespace OchoaLopes.ExprEngine.Validators
             }
         }
 
+        public static void ValidateDivide(object? left, object? right)
+        {
+            if (left is string || right is string)
+            {
+                throw new InvalidOperationException("Both values cannot be a string");
+            }
+
+            if (right is double rightDouble && Math.Abs(rightDouble) < double.Epsilon)
+            {
+                throw new DivideByZeroException("Division by zero is not allowed.");
+            }
+
+            if (left is bool || right is bool)
+            {
+                throw new InvalidOperationException("Both operands of a division cannot be a boolean type.");
+            }
+
+            if (left is DateTime || right is DateTime)
+            {
+                throw new InvalidOperationException("Both values cannot be a date");
+            }
+        }
+
         public static void ValidateNot(object? value)
         {
             if (value is not bool)
@@ -135,6 +158,14 @@ namespace OchoaLopes.ExprEngine.Validators
             if (left is DateTime && right is not int)
             {
                 throw new InvalidOperationException("Subtract operation with dates can be only with integers.");
+            }
+        }
+
+        public static void ValidateLike(object? left, object? right)
+        {
+            if (left is not string || right is not string)
+            {
+                throw new InvalidOperationException("Like operation can be only with strings.");
             }
         }
     }

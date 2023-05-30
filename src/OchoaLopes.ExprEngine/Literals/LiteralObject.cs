@@ -1,12 +1,12 @@
 ﻿using OchoaLopes.ExprEngine.Interfaces;
 
-namespace OchoaLopes.ExprEngine.Expressions
+namespace OchoaLopes.ExprEngine.Literals
 {
-    internal class Literal : IExpression
+    internal class LiteralObject : IExpression
     {
         public object Value { get; }
 
-        public Literal(object value)
+        public LiteralObject(object value)
         {
             Value = value;
         }

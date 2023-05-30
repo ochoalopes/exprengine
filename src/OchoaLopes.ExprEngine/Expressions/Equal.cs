@@ -1,5 +1,6 @@
 ﻿using OchoaLopes.ExprEngine.Interfaces;
 using OchoaLopes.ExprEngine.Operations;
+using OchoaLopes.ExprEngine.Validators;
 
 namespace OchoaLopes.ExprEngine.Expressions
 {

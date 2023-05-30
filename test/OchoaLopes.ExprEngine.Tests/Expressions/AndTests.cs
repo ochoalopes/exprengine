@@ -1,4 +1,5 @@
 ﻿using OchoaLopes.ExprEngine.Expressions;
+using OchoaLopes.ExprEngine.Literals;
 
 namespace OchoaLopes.ExprEngine.Tests.Expressions
 {
@@ -16,10 +17,10 @@ namespace OchoaLopes.ExprEngine.Tests.Expressions
         [Test]
         public void AndTest()
         {
-            var expr = new And(new Literal(true), new Literal(true));
+            var expr = new And(new LiteralBool(true), new LiteralBool(true));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(true));
 
-            expr = new And(new Literal(true), new Literal(false));
+            expr = new And(new LiteralBool(true), new LiteralBool(false));
             Assert.That(expr.Evaluate(variables), Is.EqualTo(false));
         }
     }

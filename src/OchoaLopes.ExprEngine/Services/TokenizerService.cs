@@ -18,7 +18,7 @@ namespace OchoaLopes.ExprEngine.Services
             _regex = RegexBuilder.BuildRegex(cultureInfo);
         }
 
-        public IList<string> TokenizeExpression(string expression, CultureInfo? cultureInfo)
+        public IList<string> TokenizeExpression(string expression, CultureInfo? cultureInfo = null)
         {
             var localRegex = cultureInfo != null ? RegexBuilder.BuildRegex(cultureInfo) : _regex;
 
@@ -36,14 +36,19 @@ namespace OchoaLopes.ExprEngine.Services
                 if (TokenValidator.IsDateType(token))
                 {
                     tokens.Add(token.Trim());
+                    continue;
                 }
-                else
+
+                if (TokenValidator.IsStringOperation(token))
                 {
-                    var matches = localRegex.Matches(token);
-                    if (matches != null)
-                    {
-                        tokens.AddRange(matches.Select(m => m.Value).ToList());
-                    }
+                    tokens.Add(token.Trim());
+                    continue;
+                }
+
+                var matches = localRegex.Matches(token);
+                if (matches != null)
+                {
+                    tokens.AddRange(matches.Select(m => m.Value).ToList());
                 }
             }
 

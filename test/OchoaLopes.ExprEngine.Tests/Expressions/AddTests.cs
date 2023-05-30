@@ -1,4 +1,6 @@
-﻿using OchoaLopes.ExprEngine.Expressions;
+﻿using OchoaLopes.ExprEngine.Enums;
+using OchoaLopes.ExprEngine.Expressions;
+using OchoaLopes.ExprEngine.Literals;
 
 namespace OchoaLopes.ExprEngine.Tests.Expressions
 {
@@ -16,21 +18,23 @@ namespace OchoaLopes.ExprEngine.Tests.Expressions
         [Test]
         public void AddTest_Strings()
         {
-            var expr = new Add(new Literal("Hello "), new Literal("World!"));
+            var expr = new Add(new LiteralString("Hello "), new LiteralString("World!"));
+
             Assert.That(expr.Evaluate(variables), Is.EqualTo("Hello World!"));
         }
 
         [Test]
         public void AddTest_Doubles()
         {
-            var expr = new Add(new Literal(3.0), new Literal(4.2));
+            var expr = new Add(new LiteralDouble(3.0), new LiteralDouble(4.2));
+
             Assert.That(expr.Evaluate(variables), Is.EqualTo(7.2));
         }
 
         [Test]
         public void AddTest_InvalidTypes()
         {
-            var expr = new Add(new Literal(true), new Literal(false));
+            var expr = new Add(new LiteralBool(true), new LiteralBool(false));
 
             Assert.Throws<InvalidOperationException>(() => expr.Evaluate(variables));
         }
