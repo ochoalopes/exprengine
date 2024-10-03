@@ -1,5 +1,4 @@
-﻿using OchoaLopes.ExprEngine.Enums;
-using OchoaLopes.ExprEngine.Helpers;
+﻿using OchoaLopes.ExprEngine.Helpers;
 using OchoaLopes.ExprEngine.Interfaces;
 using OchoaLopes.ExprEngine.Literals;
 using OchoaLopes.ExprEngine.Operations;

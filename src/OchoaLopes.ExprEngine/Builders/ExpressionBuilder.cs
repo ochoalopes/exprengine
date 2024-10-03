@@ -1,8 +1,8 @@
-﻿using System.Globalization;
-using OchoaLopes.ExprEngine.Enums;
+﻿using OchoaLopes.ExprEngine.Enums;
 using OchoaLopes.ExprEngine.Expressions;
 using OchoaLopes.ExprEngine.Interfaces;
 using OchoaLopes.ExprEngine.Literals;
+using System.Globalization;
 
 namespace OchoaLopes.ExprEngine.Builders
 {

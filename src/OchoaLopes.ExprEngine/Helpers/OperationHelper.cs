@@ -1,7 +1,5 @@
-﻿using System.Runtime.Intrinsics.X86;
-using OchoaLopes.ExprEngine.Delegates;
+﻿using OchoaLopes.ExprEngine.Delegates;
 using OchoaLopes.ExprEngine.Enums;
-using OchoaLopes.ExprEngine.Literals;
 
 namespace OchoaLopes.ExprEngine.Helpers
 {

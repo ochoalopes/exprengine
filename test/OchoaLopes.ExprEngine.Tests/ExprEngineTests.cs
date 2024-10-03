@@ -23,7 +23,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.ValidateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.ValidateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.ValidateExpression(expression, variables);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.ValidateExpression(expression, variables);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -135,7 +135,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -183,7 +183,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.ValidateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -207,7 +207,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.ValidateExpression(expression, variables);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -221,7 +221,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, values);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -235,7 +235,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, values);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -249,7 +249,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, values);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -263,7 +263,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, values);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -281,7 +281,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -299,7 +299,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -317,7 +317,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -335,7 +335,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -352,7 +352,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -387,7 +387,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -404,7 +404,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -421,7 +421,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -438,7 +438,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -457,7 +457,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -470,7 +470,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.ValidateExpression(expression);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -483,7 +483,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -513,7 +513,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -530,7 +530,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -547,7 +547,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables, new CultureInfo("pt-BR"));
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -564,7 +564,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables, new CultureInfo("pt-BR"));
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -581,7 +581,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables, new CultureInfo("fr-FR"));
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -595,7 +595,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -610,7 +610,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables, cultureInfo);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -624,7 +624,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -638,7 +638,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -653,7 +653,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables, cultureInfo);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -667,7 +667,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -681,7 +681,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -695,7 +695,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -748,7 +748,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -761,7 +761,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -774,7 +774,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -787,7 +787,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -800,7 +800,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -813,7 +813,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -826,7 +826,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
 
         [Test]
@@ -843,7 +843,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
         [Test]
@@ -860,7 +860,7 @@ namespace OchoaLopes.ExprEngine.Tests
             var result = _expressionService.EvaluateExpression(expression, variables);
 
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result, Is.False);
         }
     }
 }
