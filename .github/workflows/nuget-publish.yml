@@ -34,8 +34,22 @@ jobs:
       - name: Test
         run: dotnet test --configuration Release --no-restore
 
+      - name: Decode certificate and save to file
+        run: |
+          echo "${{ secrets.CERTIFICATE_BASE64 }}" | base64 -d > ./certificate.pfx
+
+      - name: Sign NuGet package
+        run: |
+            nuget sign ./artifacts/OchoaLopes.ExprEngine.${{ steps.get_version.outputs.VERSION }}.nupkg \
+            -CertificatePath ./certificate.pfx \
+            -Timestamper http://timestamp.digicert.com \
+            -CertificatePassword ${{ secrets.CERTIFICATE_PASSWORD }}
+
       - name: Publish NuGet package
         run: dotnet pack --configuration Release --output ./artifacts -p:Version=${{ steps.get_version.outputs.VERSION }}
         
       - name: Publish to NuGet
         run: dotnet nuget push ./artifacts/OchoaLopes.ExprEngine.${{ steps.get_version.outputs.VERSION }}.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+
+      - name: Clean up certificate file
+        run: rm ./certificate.pfx
