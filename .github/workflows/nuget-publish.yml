@@ -44,6 +44,7 @@ jobs:
             -CertificatePath ./certificate.pfx \
             -Timestamper http://timestamp.digicert.com \
             -CertificatePassword ${{ secrets.CERTIFICATE_PASSWORD }}
+            --CertificateRevocationCheck None
 
       - name: Publish NuGet package
         run: dotnet pack --configuration Release --output ./artifacts -p:Version=${{ steps.get_version.outputs.VERSION }}
