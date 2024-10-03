@@ -1,9 +1,9 @@
-﻿using System.Globalization;
-using System.Text.RegularExpressions;
-using OchoaLopes.ExprEngine.Builders;
+﻿using OchoaLopes.ExprEngine.Builders;
 using OchoaLopes.ExprEngine.Helpers;
 using OchoaLopes.ExprEngine.Interfaces;
 using OchoaLopes.ExprEngine.Validators;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace OchoaLopes.ExprEngine.Services
 {

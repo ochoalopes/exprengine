@@ -20,7 +20,8 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var tokens = _tokenizerService.TokenizeExpression(":x is null");
 
             // Assert
-            CollectionAssert.AreEqual(new[] { ":x", "is", "null" }, tokens);
+            Assert.That(tokens, Is.EquivalentTo(new[] { ":x", "is", "null" }));
+
         }
 
         [Test]
@@ -30,7 +31,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var tokens = _tokenizerService.TokenizeExpression("(:x is null && (:y >= 10i)) is null");
 
             // Assert
-            CollectionAssert.AreEqual(new[] { "(",":x", "is", "null", "&&", "(", ":y", ">=", "10i", ")", ")", "is", "null" }, tokens);
+            Assert.That(tokens, Is.EquivalentTo(new[] { "(", ":x", "is", "null", "&&", "(", ":y", ">=", "10i", ")", ")", "is", "null" }));
         }
 
         [Test]
@@ -40,7 +41,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var tokens = _tokenizerService.TokenizeExpression(":x is not null");
 
             // Assert
-            CollectionAssert.AreEqual(new[] { ":x", "is not", "null" }, tokens);
+            Assert.That(tokens, Is.EquivalentTo(new[] { ":x", "is not", "null" }));
         }
 
         [Test]
@@ -50,7 +51,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var tokens = _tokenizerService.TokenizeExpression("(:x is :y && (:y >= 10i)) is not null");
 
             // Assert
-            CollectionAssert.AreEqual(new[] { "(", ":x", "is", ":y", "&&", "(", ":y", ">=", "10i", ")", ")", "is not", "null" }, tokens);
+            Assert.That(tokens, Is.EquivalentTo(new[] { "(", ":x", "is", ":y", "&&", "(", ":y", ">=", "10i", ")", ")", "is not", "null" }));
         }
 
         [Test]
@@ -60,7 +61,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var tokens = _tokenizerService.TokenizeExpression(":x > 10i and :x < 20i");
 
             // Assert
-            CollectionAssert.AreEqual(new[] { ":x", ">", "10i", "and", ":x", "<", "20i" }, tokens);
+            Assert.That(tokens, Is.EquivalentTo(new[] { ":x", ">", "10i", "and", ":x", "<", "20i" }));
         }
 
         [Test]
@@ -70,7 +71,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var tokens = _tokenizerService.TokenizeExpression(":x > 10i or :x < 20i");
 
             // Assert
-            CollectionAssert.AreEqual(new[] { ":x", ">", "10i", "or", ":x", "<", "20i" }, tokens);
+            Assert.That(tokens, Is.EquivalentTo(new[] { ":x", ">", "10i", "or", ":x", "<", "20i" }));
         }
 
         [Test]
@@ -80,7 +81,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var tokens = _tokenizerService.TokenizeExpression(":x == %'starts with'");
 
             // Assert
-            CollectionAssert.AreEqual(new[] { ":x", "==", "%'starts with'" }, tokens);
+            Assert.That(tokens, Is.EquivalentTo(new[] { ":x", "==", "%'starts with'" }));
         }
 
         [Test]
@@ -90,7 +91,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var tokens = _tokenizerService.TokenizeExpression(":x == 'ends with'%");
 
             // Assert
-            CollectionAssert.AreEqual(new[] { ":x", "==", "'ends with'%" }, tokens);
+            Assert.That(tokens, Is.EquivalentTo(new[] { ":x", "==", "'ends with'%" }));
         }
 
         [Test]
@@ -100,7 +101,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var tokens = _tokenizerService.TokenizeExpression(":x == %'contains with'%");
 
             // Assert
-            CollectionAssert.AreEqual(new[] { ":x", "==", "%'contains with'%" }, tokens);
+            Assert.That(tokens, Is.EquivalentTo(new[] { ":x", "==", "%'contains with'%" }));
         }
 
         [Test]
@@ -110,7 +111,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var tokens = _tokenizerService.TokenizeExpression(":x like %'contains with'%");
 
             // Assert
-            CollectionAssert.AreEqual(new[] { ":x", "like", "%'contains with'%" }, tokens);
+            Assert.That(tokens, Is.EquivalentTo(new[] { ":x", "like", "%'contains with'%" }));
         }
 
         [Test]
@@ -120,7 +121,7 @@ namespace OchoaLopes.ExprEngine.Tests.Services
             var tokens = _tokenizerService.TokenizeExpression(":x not like %'contains with'%");
 
             // Assert
-            CollectionAssert.AreEqual(new[] { ":x", "not like", "%'contains with'%" }, tokens);
+            Assert.That(tokens, Is.EquivalentTo(new[] { ":x", "not like", "%'contains with'%" }));
         }
     }
 }

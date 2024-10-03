@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using OchoaLopes.ExprEngine.ValueObjects;
+﻿using OchoaLopes.ExprEngine.ValueObjects;
+using System.Globalization;
 
 namespace OchoaLopes.ExprEngine.Interfaces
 {

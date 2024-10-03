@@ -1,9 +1,9 @@
-﻿using System.Globalization;
-using OchoaLopes.ExprEngine.Builders;
+﻿using OchoaLopes.ExprEngine.Builders;
 using OchoaLopes.ExprEngine.Enums;
 using OchoaLopes.ExprEngine.Expressions;
 using OchoaLopes.ExprEngine.Interfaces;
 using OchoaLopes.ExprEngine.ValueObjects;
+using System.Globalization;
 
 namespace OchoaLopes.ExprEngine.Services
 {

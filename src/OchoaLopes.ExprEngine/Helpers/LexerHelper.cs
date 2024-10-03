@@ -1,7 +1,6 @@
-﻿using System.Globalization;
-using System.Text;
-using OchoaLopes.ExprEngine.Enums;
+﻿using OchoaLopes.ExprEngine.Enums;
 using OchoaLopes.ExprEngine.Validators;
+using System.Globalization;
 
 namespace OchoaLopes.ExprEngine.Helpers
 {

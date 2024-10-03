@@ -1,7 +1,7 @@
-﻿using System.Globalization;
-using System.Text.RegularExpressions;
-using OchoaLopes.ExprEngine.Enums;
+﻿using OchoaLopes.ExprEngine.Enums;
 using OchoaLopes.ExprEngine.ValueObjects;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace OchoaLopes.ExprEngine.Validators
 {
